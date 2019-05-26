@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.mediaansequential;
+package com.mycompany.mediaansynchronised;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,7 +24,7 @@ public class ReadCsv extends Thread {
 
     long start = System.currentTimeMillis();
 
-    public ArrayList<Integer> overallQuality = new ArrayList<>();
+    public final ArrayList<Integer> OVERALL_QUALITY = new ArrayList<>();
 
     public ArrayList<Integer> readFile() throws FileNotFoundException, IOException, InterruptedException {
 
@@ -37,35 +37,36 @@ public class ReadCsv extends Thread {
 
         for (int i = 0; i < fileNames.length; i++) {
             final int j = i;
-            Thread name = new Thread(() -> {
+            Thread t = new Thread(() -> {
                 try {
                     Reader in = new FileReader(fileNames[j]);
-                    System.out.println(fileNames[j]);
 
                     Iterable<CSVRecord> records = CSVFormat.EXCEL.withDelimiter(';').withFirstRecordAsHeader().parse(in);
                     int counter = 0;
+                            System.out.println("starting recordcount " + j);
                     for (CSVRecord record : records) {
 
-                        int quality = Integer.parseInt(record.get("quality"));
                         counter = counter + 1;
-                        synchronized (overallQuality) {
-                            overallQuality.add(quality);
+                        synchronized (OVERALL_QUALITY) {
+                            OVERALL_QUALITY.add(Integer.parseInt(record.get("quality")));
                         }
                     }
                     System.out.println("number of quality record: " + counter + " in thread " + j);
-                } catch (Exception e) {
+                } catch (IOException | NumberFormatException e) {
                     System.out.println("No .csv files are read");
                     throw new Error(e);
                 }
             });
-            name.start();
-            threadList[j] = name;
+            System.out.println("starting thread " + t);
+            t.start();
+            threadList[j] = t;
         }
         for (int i = 0; i < threadList.length; i++) {
             threadList[i].join();
         }
-        System.out.println("Length of overallQuality is " + overallQuality.size());
-        System.out.println("ReadFile, kosten in tijd: " + (System.currentTimeMillis() - start));
-        return overallQuality;
+        System.out.println("Length of overallQuality is " + OVERALL_QUALITY.size());
+        System.out.println("ReadFile, time: " 
+                + (System.currentTimeMillis() - start) + " ms");
+        return OVERALL_QUALITY;
     }
 }

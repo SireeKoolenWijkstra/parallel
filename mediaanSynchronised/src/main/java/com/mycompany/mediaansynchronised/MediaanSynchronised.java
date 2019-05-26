@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.mediaansequential;
+package com.mycompany.mediaansynchronised;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,13 +28,16 @@ public class MediaanSynchronised {
         //testCase.add(15);
         ReadCsv readCsv = new ReadCsv();
         
-        MediaanFinder mediaanFinder = new MediaanFinder();
+        MedianFinder medianFinder = new MedianFinder();
 
         System.out.println("Working Directory = "
                 + System.getProperty("user.dir"));
 
         ArrayList<Integer> list = readCsv.readFile();
-        System.out.print("Mediaan is " + mediaanFinder.findrealMediaan(list));
+        long start = System.currentTimeMillis();
+        System.out.println("Median is " + medianFinder.findrealMedian(list));
+        System.out.println("Median found in time: " + (System.currentTimeMillis() - start) + " ms");
+        System.out.println("Available processors: " 
+                + Runtime.getRuntime().availableProcessors());
     }
-
 }

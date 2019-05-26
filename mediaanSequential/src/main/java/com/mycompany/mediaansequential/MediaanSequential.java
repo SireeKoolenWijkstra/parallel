@@ -6,7 +6,9 @@
 package com.mycompany.mediaansequential;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
+import java.lang.management.OperatingSystemMXBean;
 
 /**
  *
@@ -16,26 +18,24 @@ public class MediaanSequential {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        
-//        ArrayList<Integer> testCase = new ArrayList<Integer>();//Creating arraylist
-//        testCase.add(10);//Adding object in arraylist    
-//        testCase.add(17);
-//        testCase.add(12);
-//        testCase.add(13);
-//        testCase.add(14);
-        //testCase.add(15);
-        
+
         ReadCsv readCsv = new ReadCsv();
-        
-        MediaanFinder mediaanFinder = new MediaanFinder();
+
+        MedianFinder medianFinder = new MedianFinder();
 
         System.out.println("Working Directory = "
                 + System.getProperty("user.dir"));
 
         ArrayList<Integer> list = readCsv.readFile();
-        System.out.print("Mediaan is " + mediaanFinder.findrealMediaan(list));
-    }
+        long start = System.currentTimeMillis();
+        System.out.println("Median is " + medianFinder.findrealMedian(list));
+        System.out.println("Median found in time: "
+                + (System.currentTimeMillis() - start) + " ms");
+        System.out.println("Available processors: " 
+                + Runtime.getRuntime().availableProcessors());
 
+    }
 }

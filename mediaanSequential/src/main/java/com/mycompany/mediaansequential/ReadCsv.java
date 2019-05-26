@@ -21,36 +21,35 @@ import org.apache.commons.csv.CSVRecord;
  * @author Siree
  */
 public class ReadCsv {
+
     long start = System.currentTimeMillis();
 
     public ArrayList<Integer> overallQuality = new ArrayList<>();
-    int counter = 0;
 
     public ArrayList<Integer> readFile() throws FileNotFoundException, IOException {
-        
-         
 
-        String[] fileNames = {"src\\main\\resources\\winequality-red-part-1.csv",
-            "src\\main\\resources\\winequality-red-part-2.csv",
-            "src\\main\\resources\\winequality-white-part-1.csv",
-            "src\\main\\resources\\winequality-white-part-2.csv"};
+        String[] fileNames
+                = {"src\\main\\resources\\winequality-red-part-1.csv",
+                    "src\\main\\resources\\winequality-red-part-2.csv",
+                    "src\\main\\resources\\winequality-white-part-1.csv",
+                    "src\\main\\resources\\winequality-white-part-2.csv"};
         try {
-            for (int i = 0; i < fileNames.length; i++) {
-                Reader in = new FileReader(fileNames[i]);
-                System.out.println(fileNames[i]);
-
-                Iterable<CSVRecord> records = CSVFormat.EXCEL.withDelimiter(';').withFirstRecordAsHeader().parse(in);
+            for (String fileName : fileNames) {
+                Reader in = new FileReader(fileName);
+                Iterable<CSVRecord> records = CSVFormat.EXCEL
+                        .withDelimiter(';')
+                        .withFirstRecordAsHeader()
+                        .parse(in);
                 for (CSVRecord record : records) {
-                    
-                    int quality = Integer.parseInt(record.get("quality"));
-                    counter = counter + 1;
-                    overallQuality.add(quality);
+                    overallQuality.add(Integer.parseInt(record.get("quality")));
                 }
             }
-            System.out.println("Number of quality record: " + counter);
-            System.out.println("ReadFile, kosten in tijd: " +  (System.currentTimeMillis() - start));
+            System.out.println("Length of overallQuality is "
+                    + overallQuality.size());
+            System.out.println("ReadFile, time: "
+                    + (System.currentTimeMillis() - start) + " ms");
             return overallQuality;
-        } catch (Exception e) {
+        } catch (IOException | NumberFormatException e) {
             System.out.print("No .csv files are read");
             throw e;
         }
