@@ -14,13 +14,11 @@ import java.util.ArrayList;
 public class WineQuality {
 
     ArrayList<Integer> list;
-    int pivot;
 
     public WineQuality() {
     }
 
-    public WineQuality(ArrayList<Integer> list, int pivot) {
-        this.pivot = pivot;
+    public WineQuality(ArrayList<Integer> list) {
         this.list = list;
     }
 
@@ -30,14 +28,6 @@ public class WineQuality {
 
     public void setList(ArrayList<Integer> list) {
         this.list = list;
-    }
-
-    public int getPivot() {
-        return pivot;
-    }
-
-    public void setPivot(int pivot) {
-        this.pivot = pivot;
     }
 
 }

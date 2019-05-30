@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author Siree
  */
-public class MedianFinder extends Thread {
+public class MedianFinderSynchronised extends Thread {
 
     public int findMedian(ArrayList<Integer> list, int targetIndex) throws InterruptedException {
         ArrayList<Integer> smallerThanPivot = new ArrayList<>();
@@ -31,6 +31,7 @@ public class MedianFinder extends Thread {
 
         int pivot = findPivot(list);
 
+        //
         for (int i = 0; i < THREAD_COUNT; i++) {
             final List<Integer> subList = list.subList(list.size()*i / THREAD_COUNT,
                     list.size() * (i+1) / THREAD_COUNT);

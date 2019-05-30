@@ -1,3 +1,4 @@
-mediaanSynchronised/target
-mediaanProducerConsumer/target
+*/target
+*.lst
+*.jar
 *.class
