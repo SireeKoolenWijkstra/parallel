@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Siree
  */
-public class MediaanSynchronised {
+public class MedianSynchronised {
 
     /**
      * @param args the command line arguments
@@ -28,7 +28,7 @@ public class MediaanSynchronised {
         //testCase.add(15);
         ReadCsv readCsv = new ReadCsv();
         
-        MedianFinder medianFinder = new MedianFinder();
+        MedianFinderSynchronised medianFinder = new MedianFinderSynchronised();
 
         System.out.println("Working Directory = "
                 + System.getProperty("user.dir"));
