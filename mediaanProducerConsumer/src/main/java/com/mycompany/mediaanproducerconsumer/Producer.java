@@ -40,7 +40,8 @@ public class Producer extends Thread {
                     subList = new ArrayList<Integer>();
                 }
             }
-            queue.put(new WineQuality(null));
+            queue.put(new WineQuality(subList));//when sublist.size() is less than a 100
+            queue.put(new WineQuality(null));//This is to break the waiting of the consumer
             System.out.println("Producer has put " + jobsProduced + " on the queue.");
         } catch (InterruptedException e) {
             e.printStackTrace();

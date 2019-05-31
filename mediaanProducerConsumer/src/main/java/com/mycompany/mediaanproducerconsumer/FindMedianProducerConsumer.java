@@ -62,14 +62,12 @@ public class FindMedianProducerConsumer {
             throw new Error(ex);
         }
 
-        if (smallerThanPivot.size()
-                > targetIndex) {
+        if (smallerThanPivot.size() > targetIndex) {
             return compareArraysToTargetIndex(smallerThanPivot, targetIndex);
-        } else if ((smallerThanPivot.size()
-                + equalsToPivot.size()) > targetIndex) {
+        } else if ((smallerThanPivot.size()+ equalsToPivot.size()) > targetIndex) {
             return pivotValue;
         } else {
-            return compareArraysToTargetIndex(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size() - 1);
+            return compareArraysToTargetIndex(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size());
         }
     }
 
