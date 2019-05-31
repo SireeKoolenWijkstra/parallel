@@ -29,10 +29,10 @@ public class ReadCsv {
     public ArrayList<Integer> readFile() throws FileNotFoundException, IOException {
 
         String[] fileNames
-                = {"src\\main\\resources\\winequality-red-part-1.csv",
-                    "src\\main\\resources\\winequality-red-part-2.csv",
-                    "src\\main\\resources\\winequality-white-part-1.csv",
-                    "src\\main\\resources\\winequality-white-part-2.csv"};
+                = {"..\\resources\\winequality-red-part-1.csv",
+                    "..\\resources\\winequality-red-part-2.csv",
+                    "..\\resources\\winequality-white-part-1.csv",
+                    "..\\resources\\winequality-white-part-2.csv"};
         try {
             for (String fileName : fileNames) {
                 Reader in = new FileReader(fileName);

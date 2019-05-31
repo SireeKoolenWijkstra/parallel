@@ -28,10 +28,10 @@ public class ReadCsv extends Thread {
 
     public ArrayList<Integer> readFile() throws FileNotFoundException, IOException, InterruptedException {
 
-        String[] fileNames = {"src\\main\\resources\\winequality-red-part-1.csv",
-            "src\\main\\resources\\winequality-red-part-2.csv",
-            "src\\main\\resources\\winequality-white-part-1.csv",
-            "src\\main\\resources\\winequality-white-part-2.csv"};
+        String[] fileNames = {"..\\resources\\winequality-red-part-1.csv",
+            "..\\resources\\winequality-red-part-2.csv",
+            "..\\main\\resources\\winequality-white-part-1.csv",
+            "..\\main\\resources\\winequality-white-part-2.csv"};
 
         Thread[] threadList = new Thread[fileNames.length];
 
