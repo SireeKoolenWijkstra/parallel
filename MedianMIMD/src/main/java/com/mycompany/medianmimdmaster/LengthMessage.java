@@ -5,28 +5,30 @@
  */
 package com.mycompany.medianmimdmaster;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Siree
  */
-public class LengthMessage {
+public class LengthMessage implements Serializable {
     
-    String vmName;
+    String id;
     int listSize;
 
     public LengthMessage(String vmName, int listSize) {
-        this.vmName = vmName;
+        this.id = vmName;
         this.listSize = listSize;
     }
 
     LengthMessage() {}
 
-    public String getVmName() {
-        return vmName;
+    public String getId() {
+        return id;
     }
 
-    public void setVmName(String vmName) {
-        this.vmName = vmName;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getListSize() {
@@ -36,7 +38,5 @@ public class LengthMessage {
     public void setListSize(int listSize) {
         this.listSize = listSize;
     }
-    
-    
     
 }

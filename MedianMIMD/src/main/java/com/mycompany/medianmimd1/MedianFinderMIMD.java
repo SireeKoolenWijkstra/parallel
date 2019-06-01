@@ -7,11 +7,7 @@ package com.mycompany.medianmimd1;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
+import com.mycompany.medianmimdmaster.*;
 
 /**
  *
@@ -29,15 +25,11 @@ public class MedianFinderMIMD {
         this.jobsProcessed = 0;
     }
 
-
-    public Integer[] findMedianMIMD(int pivotValue, ArrayList<Integer> list, String listCategory) {
+    public SmallEqualBiggerLists findMedianMIMD(int pivotValue, ArrayList<Integer> list, String listCategory) {
         this.list = list;
         if (listCategory != null && list == null) {
             if ("smallerThanPivot".equals(listCategory)) {
                 this.list = smallerThanPivot;
-            }
-            if ("equalsToPivot".equals(listCategory)) {
-                this.list = equalsToPivot;
             }
             if ("biggerThanPivot".equals(listCategory)) {
                 this.list = biggerThanPivot;
@@ -45,11 +37,10 @@ public class MedianFinderMIMD {
         } else {
             System.out.println("first run! ");
         }
-        
+
         smallerThanPivot = new ArrayList<>();
         equalsToPivot = new ArrayList<>();
         biggerThanPivot = new ArrayList<>();
-        Integer[] lengthList = new Integer[3];
 
         for (int i = 0; i < this.list.size(); i++) {
             if (this.list.get(i) < this.list.get(pivotValue)) {
@@ -60,12 +51,13 @@ public class MedianFinderMIMD {
                 biggerThanPivot.add(this.list.get(i));
             }
         }
-        lengthList[0] = smallerThanPivot.size();
-        lengthList[1] = equalsToPivot.size();
-        lengthList[2] = biggerThanPivot.size();
+        SmallEqualBiggerLists lengthList = new SmallEqualBiggerLists(
+                null,
+                smallerThanPivot.size(),
+                equalsToPivot.size(),
+                biggerThanPivot.size());
 
         return lengthList;
     }
 ;
-
 }

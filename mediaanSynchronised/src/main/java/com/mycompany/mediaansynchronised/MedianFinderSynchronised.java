@@ -69,7 +69,7 @@ public class MedianFinderSynchronised extends Thread {
         } else if ((smallerThanPivot.size() + equalsToPivot.size()) > targetIndex) {
             return list.get(pivot);
         } else {
-            return findMedian(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size() - 1);
+            return findMedian(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size());
         }
 
     }

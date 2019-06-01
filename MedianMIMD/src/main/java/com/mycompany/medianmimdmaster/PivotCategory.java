@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.medianmimd1;
+package com.mycompany.medianmimdmaster;
+
+import java.io.Serializable;
 
 /**
  *
  * @author Siree
  */
-public class PivotCategory {
+public class PivotCategory implements Serializable {
     
     private int pivotValue;
     private String listCategory;
