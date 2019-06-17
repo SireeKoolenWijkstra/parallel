@@ -22,7 +22,7 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class ReadCsvProducerConsumer extends Thread {
 
-    long start = System.currentTimeMillis();
+    long start2 = System.currentTimeMillis();
 
     public final ArrayList<Integer> OVERALL_QUALITY = new ArrayList<>();
 
@@ -66,7 +66,7 @@ public class ReadCsvProducerConsumer extends Thread {
         }
         System.out.println("Length of overallQuality is " + OVERALL_QUALITY.size());
         System.out.println("ReadFile, time: " 
-                + (System.currentTimeMillis() - start) + " ms");
+                + (System.currentTimeMillis() - start2) + " ms");
         
         return OVERALL_QUALITY;
     }

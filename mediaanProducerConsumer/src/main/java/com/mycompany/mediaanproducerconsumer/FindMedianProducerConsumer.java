@@ -7,6 +7,7 @@ package com.mycompany.mediaanproducerconsumer;
 
 import com.mycompany.mediaanproducerconsumer.Objects.WineQuality;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -28,16 +29,16 @@ public class FindMedianProducerConsumer {
 
     }
 
-    public void SingleProducerSingleConsumer(ArrayList<Integer> wineList, int queueCapacity
-            ,int pivotValue, ArrayList<Integer> smallerThanPivot, ArrayList<Integer> equalsToPivot
-            ,ArrayList<Integer> biggerThanPivot) throws InterruptedException {
+    public void SingleProducerSingleConsumer(ArrayList<Integer> wineList, int queueCapacity,
+             int pivotValue, ArrayList<Integer> smallerThanPivot, ArrayList<Integer> equalsToPivot,
+             ArrayList<Integer> biggerThanPivot) throws InterruptedException {
 
         ExecutorService executorService = Executors.newCachedThreadPool();
         BlockingQueue<WineQuality> queue = new ArrayBlockingQueue<>(queueCapacity);
 
         Producer producer = new Producer(wineList, queue);
-        Consumer consumer = new Consumer(queue, 1, pivotValue, smallerThanPivot
-                , equalsToPivot, biggerThanPivot);
+        Consumer consumer = new Consumer(queue, 1, pivotValue, smallerThanPivot,
+                 equalsToPivot, biggerThanPivot);
 
         executorService.submit(producer);
         executorService.submit(consumer);
@@ -62,9 +63,19 @@ public class FindMedianProducerConsumer {
             throw new Error(ex);
         }
 
+        int countRandom = 0;
+        // Code so that finding the median will take time
+        Random random = new Random();
+        int j = ((random.nextInt(50)) + 1) * 1000000;
+
+        //Act
+        for (int i = 0; i < j; i++) {
+            countRandom++;
+        }
+
         if (smallerThanPivot.size() > targetIndex) {
             return compareArraysToTargetIndex(smallerThanPivot, targetIndex);
-        } else if ((smallerThanPivot.size()+ equalsToPivot.size()) > targetIndex) {
+        } else if ((smallerThanPivot.size() + equalsToPivot.size()) > targetIndex) {
             return pivotValue;
         } else {
             return compareArraysToTargetIndex(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size());

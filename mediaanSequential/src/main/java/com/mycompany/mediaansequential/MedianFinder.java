@@ -5,15 +5,15 @@
  */
 package com.mycompany.mediaansequential;
 
-
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Finds the median of a list without sorting
- * Ignores part of list that doesn't contain the median value
- * 
+ * Finds the median of a list without sorting Ignores part of list that doesn't
+ * contain the median value
+ *
  * @author Siree
  */
 public class MedianFinder {
@@ -24,13 +24,21 @@ public class MedianFinder {
         ArrayList<Integer> equalsToPivot = new ArrayList<>();
 
         int pivot = findPivot(list);
+        int countRandom = 0;
+        // Code so that finding the median will take time
+        Random random = new Random();
+        int j = ((random.nextInt(50)) + 1) * 1000000;
+
+        //Act
+        for (int i = 0; i < j; i++) {
+            countRandom++;
+        }
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) < list.get(pivot)) {
                 smallerThanPivot.add(list.get(i));
-            } else if (i == pivot) {
-                //Do nothing
-            } else if (Objects.equals(list.get(i), list.get(pivot))) {
+            } 
+             else if (Objects.equals(list.get(i), list.get(pivot))) {
                 equalsToPivot.add(list.get(i));
             } else {
                 biggerThanPivot.add(list.get(i));
@@ -43,7 +51,7 @@ public class MedianFinder {
         } else if ((smallerThanPivot.size() + equalsToPivot.size()) > targetIndex) {
             return list.get(pivot);
         } else {
-            return findMedian(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size() - 1);
+            return findMedian(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size());
         }
     }
 
@@ -63,5 +71,7 @@ public class MedianFinder {
     public int findPivot(ArrayList<Integer> list) {
         return ThreadLocalRandom.current().nextInt(0, list.size());
     }
-    
+
 }
+
+

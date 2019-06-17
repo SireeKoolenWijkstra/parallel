@@ -8,6 +8,7 @@ package com.mycompany.mediaansynchronised;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -24,8 +25,6 @@ public class MedianFinderSynchronised extends Thread {
         ArrayList<Integer> equalsToPivot = new ArrayList<>();
         final int THREAD_COUNT = 16;
 
-        //TODO make dynamic thread array
-        
         // Necessary for join
         Thread[] threadList = new Thread[THREAD_COUNT];
 
@@ -33,11 +32,21 @@ public class MedianFinderSynchronised extends Thread {
 
         //
         for (int i = 0; i < THREAD_COUNT; i++) {
-            final List<Integer> subList = list.subList(list.size()*i / THREAD_COUNT,
-                    list.size() * (i+1) / THREAD_COUNT);
+
+            final List<Integer> subList = list.subList(list.size() * i / THREAD_COUNT,
+                    list.size() * (i + 1) / THREAD_COUNT);
 
             Thread t = new Thread() {
                 public void run() {
+
+                    int countRandom = 0;
+                    // Code so that finding the median will take time
+                    Random random = new Random();
+                    int k = ((random.nextInt(50)) + 1) * 1000000;
+
+                    for (int i = 0; i < k; i++) {
+                        countRandom++;
+                    }
 
                     for (int j = 0; j < subList.size(); j++) {
                         if (subList.get(j) < list.get(pivot)) {
