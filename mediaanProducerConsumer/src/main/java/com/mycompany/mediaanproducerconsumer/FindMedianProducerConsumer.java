@@ -30,21 +30,29 @@ public class FindMedianProducerConsumer {
     }
 
     public void SingleProducerSingleConsumer(ArrayList<Integer> wineList, int queueCapacity,
-             int pivotValue, ArrayList<Integer> smallerThanPivot, ArrayList<Integer> equalsToPivot,
-             ArrayList<Integer> biggerThanPivot) throws InterruptedException {
+            int pivotValue, ArrayList<Integer> smallerThanPivot, ArrayList<Integer> equalsToPivot,
+            ArrayList<Integer> biggerThanPivot) throws InterruptedException {
 
         ExecutorService executorService = Executors.newCachedThreadPool();
         BlockingQueue<WineQuality> queue = new ArrayBlockingQueue<>(queueCapacity);
 
         Producer producer = new Producer(wineList, queue);
         Consumer consumer = new Consumer(queue, 1, pivotValue, smallerThanPivot,
-                 equalsToPivot, biggerThanPivot);
-
+                    equalsToPivot, biggerThanPivot);
         executorService.submit(producer);
         executorService.submit(consumer);
 
+//        int cores = Runtime.getRuntime().availableProcessors();
+//
+//        for (int i = 0; i < cores; i++) {
+//            Consumer consumer = new Consumer(queue, 1, pivotValue, smallerThanPivot,
+//                    equalsToPivot, biggerThanPivot);
+//            executorService.submit(consumer);
+//        }
+        
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.DAYS);
+
 
     }
 
@@ -57,7 +65,7 @@ public class FindMedianProducerConsumer {
         int pivotValue = findPivot(list);
 
         try {
-            SingleProducerSingleConsumer(list, 5, pivotValue, smallerThanPivot, equalsToPivot, biggerThanPivot);
+            SingleProducerSingleConsumer(list, 20, pivotValue, smallerThanPivot, equalsToPivot, biggerThanPivot);
         } catch (InterruptedException ex) {
             Logger.getLogger(FindMedianProducerConsumer.class.getName()).log(Level.SEVERE, null, ex);
             throw new Error(ex);

@@ -5,10 +5,10 @@
  */
 package com.mycompany.mediaanproducerconsumer;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -39,7 +39,7 @@ public class ReadCsvProducerConsumer extends Thread {
             final int j = i;
             Thread t = new Thread(() -> {
                 try {
-                    Reader in = new FileReader(fileNames[j]);
+                    BufferedReader in = new BufferedReader(new FileReader(fileNames[j]));
 
                     Iterable<CSVRecord> records = CSVFormat.EXCEL.withDelimiter(';').withFirstRecordAsHeader().parse(in);
                     int counter = 0;
