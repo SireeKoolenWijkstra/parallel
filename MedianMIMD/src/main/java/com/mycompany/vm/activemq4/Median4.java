@@ -63,12 +63,12 @@ public class Median4 {
 
         // if it's the first run we need the producer to send the list length to manager
         // this is done before listening to other messages
-        if (firstRun) {
-            LengthMessage lm = new LengthMessage(VM_4, list.size());
-            // send message about totalListSize
-            ObjectMessage LengthMessageTo = session.createObjectMessage(lm);
-            producer_toLengthList.send(LengthMessageTo);
-        }
+        // it keeps this in memory until its shutdown
+        LengthMessage lm = new LengthMessage(VM_4, list.size());
+        // send message about totalListSize
+        ObjectMessage LengthMessageTo = session.createObjectMessage(lm);
+        producer_toLengthList.send(LengthMessageTo);
+
 
         while (active) {
             // let consumer receive messages
