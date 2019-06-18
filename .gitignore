@@ -2,3 +2,5 @@
 *.lst
 *.jar
 *.class
+/mediaanSynchronised/nbproject/
+/mediaanProducerConsumer/nbproject/

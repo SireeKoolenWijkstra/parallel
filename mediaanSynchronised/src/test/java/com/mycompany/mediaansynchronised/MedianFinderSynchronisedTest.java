@@ -16,77 +16,109 @@ import static org.junit.Assert.*;
  * @author Siree
  */
 public class MedianFinderSynchronisedTest {
-    
-    public MedianFinderSynchronisedTest() {
-    }
-    
+
+    MedianFinderSynchronised medianFinderSynchronised;
+
     @Before
     public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+        System.out.println("MedianFinderSynchronisedTest: Before method setUp()");
+        medianFinderSynchronised = new MedianFinderSynchronised();
     }
 
-    /**
-     * Test of findMedian method, of class MedianFinderSynchronised.
-     */
-    @Test
-    public void testFindMedian() throws Exception {
-        System.out.println("findMedian");
-        ArrayList<Integer> list = null;
-        int targetIndex = 0;
-        MedianFinderSynchronised instance = new MedianFinderSynchronised();
-        int expResult = 0;
-        int result = instance.findMedian(list, targetIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    @After
+    public void tearDown() {
+        System.out.println("MedianFinderSynchronisedTest: After method tearDown()");
+        medianFinderSynchronised = null;
     }
 
     /**
      * Test of findrealMedian method, of class MedianFinderSynchronised.
      */
-    @Test
-    public void testFindrealMedian() throws Exception {
-        System.out.println("findrealMedian");
-        ArrayList<Integer> list = null;
-        MedianFinderSynchronised instance = new MedianFinderSynchronised();
-        int expResult = 0;
-        int result = instance.findrealMedian(list);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    @Test(expected = NullPointerException.class)
+    public void testFindrealMedianSynchronisedTestWithListNullShouldReturnNullPointerException() throws InterruptedException {
+        //Arrange
+        ArrayList<Integer> testWithNull = new ArrayList<>();
+        System.out.println("findrealMedianSynchronisedTestWithListNull");
+        testWithNull = null;
+
+        //Act
+        medianFinderSynchronised.findrealMedian(testWithNull);
     }
 
     /**
-     * Test of divideArrayList method, of class MedianFinderSynchronised.
+     * Test of findrealMedian method, of class MedianFinder.
      */
     @Test
-    public void testDivideArrayList() {
-        System.out.println("divideArrayList");
-        ArrayList<Integer> list = null;
-        MedianFinderSynchronised instance = new MedianFinderSynchronised();
-        int expResult = 0;
-        int result = instance.divideArrayList(list);
+    public void testFindrealMedianSynchronisedTestWithListSizeOneShouldReturn1() throws InterruptedException {
+        //Arrange
+        ArrayList<Integer> testWithListSizeOne = new ArrayList<>();
+        System.out.println("findrealMedianSynchronisedTestWithListSizeOne");
+        testWithListSizeOne.add(1);
+        int expResult = 1;
+        //Act
+        int result = medianFinderSynchronised.findrealMedian(testWithListSizeOne);
+        //Assert
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
-    /**
-     * Test of findPivot method, of class MedianFinderSynchronised.
-     */
     @Test
-    public void testFindPivot() {
-        System.out.println("findPivot");
-        ArrayList<Integer> list = null;
-        MedianFinderSynchronised instance = new MedianFinderSynchronised();
-        int expResult = 0;
-        int result = instance.findPivot(list);
+    public void testFindrealMedianSynchronisedTestWithListSizeEvenShouldReturn3() throws InterruptedException {
+        //Arrange
+        System.out.println("findrealMedianSynchornisedTestWithListSizeEven");
+
+        ArrayList<Integer> testWithListSizeEven = new ArrayList<>();
+
+        testWithListSizeEven.add(1);
+        testWithListSizeEven.add(2);
+        testWithListSizeEven.add(3);
+        testWithListSizeEven.add(4);
+        int expResult = 3;
+        //Act
+        int result = medianFinderSynchronised.findrealMedian(testWithListSizeEven);
+        //Assert
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
-    
+
+    @Test
+    public void testFindrealMedianTestWithListSizeUnevenShouldReturn3() throws InterruptedException {
+        //Arrange
+        System.out.println("findrealMedianSynchronisedTestWithListSizeEven");
+
+        ArrayList<Integer> testWithListSizeUneven = new ArrayList<>();
+
+        testWithListSizeUneven.add(1);
+        testWithListSizeUneven.add(2);
+        testWithListSizeUneven.add(3);
+        testWithListSizeUneven.add(4);
+        testWithListSizeUneven.add(5);
+        int expResult = 3;
+        //Act
+        int result = medianFinderSynchronised.findrealMedian(testWithListSizeUneven);
+        //Assert
+        assertEquals(expResult, result);
+
+    }
+
+    @Test
+    public void testFindrealMedianTestLastIndexShouldReturn3() throws InterruptedException {
+        //Arrange
+        System.out.println("findrealMedianSynchronisedTestWithListSizeEven");
+
+        ArrayList<Integer> testLastIndex = new ArrayList<>();
+
+        testLastIndex.add(1);
+        testLastIndex.add(2);
+        testLastIndex.add(3);
+        int targetIndex = testLastIndex.size() - 1;
+
+        int expResult = 3;
+        //Act
+        int result = medianFinderSynchronised.findMedian(testLastIndex, targetIndex);
+        //Assert
+        assertEquals(expResult, result);
+
+    }
+
 }
