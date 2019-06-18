@@ -5,10 +5,10 @@
  */
 package com.mycompany.mediaansequential;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -35,7 +35,8 @@ public class ReadCsv {
                     "..\\resources\\winequality-white-part-2.csv"};
         try {
             for (String fileName : fileNames) {
-                Reader in = new FileReader(fileName);
+                BufferedReader in = new BufferedReader(new FileReader(fileName));
+                
                 Iterable<CSVRecord> records = CSVFormat.EXCEL
                         .withDelimiter(';')
                         .withFirstRecordAsHeader()

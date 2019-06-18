@@ -25,9 +25,7 @@ public class MedianProducerConsumer {
         FindMedianProducerConsumer findMedianPC = new FindMedianProducerConsumer();
         ReadCsvProducerConsumer csv = new ReadCsvProducerConsumer();
 
-        ArrayList<Integer> wineList = false
-                ? csv.readFile()
-                : new ArrayList(Arrays.asList(new Integer[] {1}));
+        ArrayList<Integer> wineList =  csv.readFile();
         long start = System.currentTimeMillis();
         System.out.println("Median is " + findMedianPC.findMedianProducerConsumer(wineList));
         System.out.println("Median found in time: " + (System.currentTimeMillis() - start) + " ms");

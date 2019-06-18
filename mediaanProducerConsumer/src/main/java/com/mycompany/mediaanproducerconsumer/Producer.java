@@ -8,7 +8,6 @@ package com.mycompany.mediaanproducerconsumer;
 import com.mycompany.mediaanproducerconsumer.Objects.WineQuality;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *

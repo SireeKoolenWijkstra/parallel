@@ -6,6 +6,7 @@
 package com.mycompany.mediaansequential;
 
 import java.io.IOException;
+import static java.lang.String.format;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.lang.management.OperatingSystemMXBean;
@@ -15,6 +16,13 @@ import java.lang.management.OperatingSystemMXBean;
  * @author Siree
  */
 public class MediaanSequential {
+    
+     private static final long MEGABYTE = 1024L * 1024L;
+     private static String format = "%-40s%s%n";
+
+    public static long bytesToMegabytes(long bytes) {
+        return bytes / MEGABYTE;
+    }
 
     /**
      * @param args the command line arguments
@@ -36,6 +44,18 @@ public class MediaanSequential {
                 + (System.currentTimeMillis() - start) + " ms");
         System.out.println("Available processors: " 
                 + Runtime.getRuntime().availableProcessors());
+        
+        // Get the Java runtime
+                Runtime runtime = Runtime.getRuntime();
+                // Run the garbage collector
+                runtime.gc();
+                
+                
+                // Calculate the used memory
+                long memory = runtime.totalMemory() - runtime.freeMemory();
+                System.out.printf(format,"Used memory is bytes: ", memory);
+                System.out.printf(format, "Used memory is megabytes: ",
+                         bytesToMegabytes(memory));
 
     }
 }

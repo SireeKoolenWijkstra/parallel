@@ -41,7 +41,7 @@ public class ReadCsv {
 //            }
 
 
-            Reader in = new FileReader(FILE_PATH);
+            BufferedReader in = new BufferedReader(new FileReader(FILE_PATH));
             Iterable<CSVRecord> records = CSVFormat.EXCEL
                     .withDelimiter(';')
                     .withFirstRecordAsHeader()
