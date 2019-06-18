@@ -17,24 +17,23 @@ import java.util.Random;
  */
 public class MedianFinder3 {
 
-    private int jobsProcessed;
-    private ArrayList<Integer> list;
-    private ArrayList<Integer> smallerThanPivot;
-    private ArrayList<Integer> equalsToPivot;
-    private ArrayList<Integer> biggerThanPivot;
+    private static int jobsProcessed;
+    private static ArrayList<Integer> list;
+    private static ArrayList<Integer> smallerThanPivot;
+    private static ArrayList<Integer> equalsToPivot;
+    private static ArrayList<Integer> biggerThanPivot;
 
     MedianFinder3() {
         this.jobsProcessed = 0;
     }
 
-    public SmallEqualBiggerLists findMedianMIMD(int pivotValue, ArrayList<Integer> list, String listCategory) {
-        this.list = list;
+    public static SmallEqualBiggerLists findMedianMIMD(int pivotValue, ArrayList<Integer> list, String listCategory) {
         if (listCategory != null && list == null) {
             if ("smallerThanPivot".equals(listCategory)) {
-                this.list = smallerThanPivot;
+                list = smallerThanPivot;
             }
             if ("biggerThanPivot".equals(listCategory)) {
-                this.list = biggerThanPivot;
+                list = biggerThanPivot;
             }
         }
 
@@ -42,40 +41,41 @@ public class MedianFinder3 {
         equalsToPivot = new ArrayList<>();
         biggerThanPivot = new ArrayList<>();
 
-        for (Integer integer : this.list) {
-            if (integer < this.list.get(pivotValue)) {
+        for (int i = 0; i < list.size(); i++) {
+            int value = list.get(i);
+            if (value < pivotValue) {
                 int countRandom = 0;
                 // Code so that finding the median will take time
                 Random random = new Random();
-                int j = ((random.nextInt(50)) + 1) * 1000000;
+                int k = ((random.nextInt(50)) + 1) * 1000000;
 
                 //Act
-                for (int i = 0; i < j; i++) {
+                for (int j = 0; j < k; j++) {
                     countRandom++;
                 }
-                smallerThanPivot.add(integer);
-            } else if (Objects.equals(integer, this.list.get(pivotValue))) {
+                smallerThanPivot.add(value);
+            } else if (value == pivotValue) {
                 int countRandom = 0;
                 // Code so that finding the median will take time
                 Random random = new Random();
-                int j = ((random.nextInt(50)) + 1) * 1000000;
+                int k = ((random.nextInt(50)) + 1) * 1000000;
 
                 //Act
-                for (int i = 0; i < j; i++) {
+                for (int j = 0; j < k; j++) {
                     countRandom++;
                 }
-                equalsToPivot.add(integer);
+                equalsToPivot.add(value);
             } else {
                 int countRandom = 0;
                 // Code so that finding the median will take time
                 Random random = new Random();
-                int j = ((random.nextInt(50)) + 1) * 1000000;
+                int k = ((random.nextInt(50)) + 1) * 1000000;
 
                 //Act
-                for (int i = 0; i < j; i++) {
+                for (int j = 0; j < k; j++) {
                     countRandom++;
                 }
-                biggerThanPivot.add(integer);
+                biggerThanPivot.add(value);
             }
         }
 

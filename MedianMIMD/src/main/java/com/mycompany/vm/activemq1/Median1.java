@@ -99,17 +99,17 @@ public class Median1 {
                     String listCategory = pc.getListCategory();
 
                     //create new object instance of medianFinder
-                    MedianFinder1 mf = new MedianFinder1();
+
                     SmallEqualBiggerLists lengthList;
                     if (firstRun) {
                         //With the first run there is no listCategory because it's still the whole list
-                        lengthList = mf.findMedianMIMD(pivotValue, list, null);
+                        lengthList = MedianFinder1.findMedianMIMD(pivotValue, list, null);
                         System.out.println("pivotValue VM_1: " + pivotValue);
                         System.out.println("list VM_1: " + list.size());
                         firstRun = false;
                     } else {
                         //Using only startAllAtOnce value and list category to determine the new list that needs to be processed
-                        lengthList = mf.findMedianMIMD(pivotValue, null, listCategory);
+                        lengthList = MedianFinder1.findMedianMIMD(pivotValue, null, listCategory);
 
                         System.out.println("pivotValue VM_1: " + pivotValue);
                         System.out.println("listCategory VM_1: " + listCategory);

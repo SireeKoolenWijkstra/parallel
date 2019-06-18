@@ -244,7 +244,7 @@ public class MedianFindMain {
             Pivot p = (Pivot) m;
             subListPivotValue = p.getPivot();
 
-            System.out.println("Pivot Value " + targetIndex);
+            System.out.println("Pivot Value " + subListPivotValue);
             System.out.println("total size of lists: " + listSize);
 
             if (subListPivotValue >= 0) {
