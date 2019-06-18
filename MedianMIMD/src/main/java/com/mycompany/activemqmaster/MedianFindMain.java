@@ -56,11 +56,17 @@ public class MedianFindMain {
     private static int subListPivotValue;
     private static String searchListForPivot = "";
     private static String category = null;
+    private static String format = "%-40s%s%n";
+    private static final long MEGABYTE = 1024L * 1024L;
 
+    public static long bytesToMegabytes(long bytes) {
+        return bytes / MEGABYTE;
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws JMSException, IOException {
+
         long totalTime = System.currentTimeMillis();
 
 
@@ -103,7 +109,7 @@ public class MedianFindMain {
         MessageConsumer consumer_fromQueue3 = session.createConsumer(destination_fromQueue3);
         MessageConsumer consumer_fromQueue4 = session.createConsumer(destination_fromQueue4);
 
-        System.out.println("Connection set up in " + (System.currentTimeMillis() - startConnection) + " ms");
+        System.out.printf(format, "Connection set up in ", (System.currentTimeMillis() - startConnection) + " ms");
 
         if(firstRun) {
             //getting the targetIndex from total list via separate session.
@@ -139,9 +145,9 @@ public class MedianFindMain {
                 subListPivotIndex = getSubListPivotIndex(pivotIndex, category);
             }
 
-            System.out.println("Targeted Index " + targetIndex);
-            System.out.println("Total list size is " + listSize);
-            System.out.println("subListPivotIndex " + subListPivotIndex);
+            System.out.printf(format, "Targeted Index ", targetIndex);
+            System.out.printf(format, "Total list size is ", listSize);
+            System.out.printf(format, "subListPivotIndex ", subListPivotIndex);
 
             smallerThanPivotLength = 0;
             equalsToPivotLength = 0;
@@ -200,10 +206,10 @@ public class MedianFindMain {
             }
             // determine which list is bigger than the targetIndex to decide which listCategory needs to be send with new startAllAtOnce
             String format = "%-40s%s%n";
-            System.out.println("----------------------------------------");
-            System.out.printf(format, "smallerThanPivotLength, targetIndex: ", smallerThanPivotLength + " > " + targetIndex);
-            System.out.printf(format, "smallerThanPivotLength, equalsToPivotLength, targetIndex: ", smallerThanPivotLength + " + " + equalsToPivotLength + " > " + targetIndex);
-            System.out.printf(format, "biggerThanPivotLength: ", biggerThanPivotLength);
+//            System.out.println("----------------------------------------");
+//            System.out.printf(format, "smallerThanPivotLength, targetIndex: ", smallerThanPivotLength + " > " + targetIndex);
+//            System.out.printf(format, "smallerThanPivotLength, equalsToPivotLength, targetIndex: ", smallerThanPivotLength + " + " + equalsToPivotLength + " > " + targetIndex);
+//            System.out.printf(format, "biggerThanPivotLength: ", biggerThanPivotLength);
             System.out.println("----------------------------------------");
             if (smallerThanPivotLength > targetIndex) {
                 anotherRun = true;
@@ -215,17 +221,25 @@ public class MedianFindMain {
                 System.out.printf(format, "Total time for finding median: ", (System.currentTimeMillis() - totalTime) + " ms");
                 System.out.printf(format, "Median is found in ", medianFoundInCycles + " cycles");
                 System.out.printf(format, "Median is ", subListPivotValue);
+                // Get the Java runtime
+                Runtime runtime = Runtime.getRuntime();
+                // Run the garbage collector
+                runtime.gc();
+                // Calculate the used memory
+                long memory = runtime.totalMemory() - runtime.freeMemory();
+                System.out.printf(format,"Used memory is bytes: ", memory);
+                System.out.printf(format, "Used memory is megabytes: ",
+                         bytesToMegabytes(memory));
                 //firstRun = true;
                 //MedianFindMain.main(null);
             } else {
                 anotherRun = true;
-                System.out.printf(format, "targetIndex calculation: ", targetIndex + " - " + smallerThanPivotLength + " - " + equalsToPivotLength);
                 targetIndex = targetIndex - smallerThanPivotLength - equalsToPivotLength;
-                System.out.printf(format, "new target index: ", targetIndex);
                 listSize = biggerThanPivotLength;
                 category = BIGGER_LIST;
                 System.out.printf(format, "category is: ", category);
             }
+            System.out.println("----------------------------------------");
         }
 
         // all functions recursive method call 
@@ -349,6 +363,7 @@ public class MedianFindMain {
                 messageReceived++;
             }
         }
+        System.out.printf(format, "Total list size: ", listSize);
         // function for finding the target index on all lists together 
         if (listSize % 2 == 1) {
             targetIndex = (listSize - 1) / 2;

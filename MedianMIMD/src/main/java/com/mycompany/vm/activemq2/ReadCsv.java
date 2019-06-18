@@ -65,8 +65,8 @@ public class ReadCsv {
             }
         }
         String format = "%-25s%s%n";
-        System.out.printf(format, "Length of list VM2: ", overallQuality.size());
-        System.out.printf(format, "ReadFile time: ", (System.currentTimeMillis() - start) + " ms");
+//        System.out.printf(format, "Length of list VM2: ", overallQuality.size());
+        System.out.printf(format, "ReadFile time VM_2: ", (System.currentTimeMillis() - start) + " ms");
         return overallQuality;
     }
 }
