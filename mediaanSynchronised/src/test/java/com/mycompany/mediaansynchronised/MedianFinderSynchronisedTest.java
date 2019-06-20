@@ -32,7 +32,7 @@ public class MedianFinderSynchronisedTest {
     }
 
     /**
-     * Test of findrealMedian method, of class MedianFinderSynchronised.
+     * Test of findRealMedian method, of class MedianFinderSynchronised.
      */
     @Test(expected = NullPointerException.class)
     public void testFindrealMedianSynchronisedTestWithListNullShouldReturnNullPointerException() throws InterruptedException {
@@ -42,11 +42,11 @@ public class MedianFinderSynchronisedTest {
         testWithNull = null;
 
         //Act
-        medianFinderSynchronised.findrealMedian(testWithNull);
+        medianFinderSynchronised.findRealMedian(testWithNull);
     }
 
     /**
-     * Test of findrealMedian method, of class MedianFinder.
+     * Test of findRealMedian method, of class MedianFinder.
      */
     @Test
     public void testFindrealMedianSynchronisedTestWithListSizeOneShouldReturn1() throws InterruptedException {
@@ -56,7 +56,7 @@ public class MedianFinderSynchronisedTest {
         testWithListSizeOne.add(1);
         int expResult = 1;
         //Act
-        int result = medianFinderSynchronised.findrealMedian(testWithListSizeOne);
+        int result = medianFinderSynchronised.findRealMedian(testWithListSizeOne);
         //Assert
         assertEquals(expResult, result);
 
@@ -75,7 +75,7 @@ public class MedianFinderSynchronisedTest {
         testWithListSizeEven.add(4);
         int expResult = 3;
         //Act
-        int result = medianFinderSynchronised.findrealMedian(testWithListSizeEven);
+        int result = medianFinderSynchronised.findRealMedian(testWithListSizeEven);
         //Assert
         assertEquals(expResult, result);
 
@@ -95,7 +95,7 @@ public class MedianFinderSynchronisedTest {
         testWithListSizeUneven.add(5);
         int expResult = 3;
         //Act
-        int result = medianFinderSynchronised.findrealMedian(testWithListSizeUneven);
+        int result = medianFinderSynchronised.findRealMedian(testWithListSizeUneven);
         //Assert
         assertEquals(expResult, result);
 

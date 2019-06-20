@@ -17,9 +17,9 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author Siree
  */
-public class MedianFinderSynchronised extends Thread {
+class MedianFinderSynchronised extends Thread {
 
-    public int findMedian(ArrayList<Integer> list, int targetIndex) throws InterruptedException {
+    int findMedian(ArrayList<Integer> list, int targetIndex) throws InterruptedException {
         ArrayList<Integer> smallerThanPivot = new ArrayList<>();
         ArrayList<Integer> biggerThanPivot = new ArrayList<>();
         ArrayList<Integer> equalsToPivot = new ArrayList<>();
@@ -29,6 +29,8 @@ public class MedianFinderSynchronised extends Thread {
         Thread[] threadList = new Thread[THREAD_COUNT];
 
         int pivot = findPivot(list);
+        int pivotValue = list.get(pivot);
+        System.out.println("Pivot Value: " + pivotValue);
 
         //
         for (int i = 0; i < THREAD_COUNT; i++) {
@@ -39,27 +41,46 @@ public class MedianFinderSynchronised extends Thread {
             Thread t = new Thread() {
                 public void run() {
 
+                    ArrayList<Integer> localSmallerThanPivot = new ArrayList<>();
+                    ArrayList<Integer> localBiggerThanPivot = new ArrayList<>();
+                    ArrayList<Integer> localEqualsToPivot = new ArrayList<>();
+
+                    System.out.println("subList size: " + subList.size());
+
                     int countRandom = 0;
                     // Code so that finding the median will take time
                     Random random = new Random();
                     int k = ((random.nextInt(50)) + 1) * 1000000;
 
-                    for (int i = 0; i < k; i++) {
+                    for (int i1 = 0; i1 < k; i1++) {
                         countRandom++;
                     }
 
+                    // before synchronized was taking ReadFile, time: 3917 ms
+                    // now with waiting until a 100
+
                     for (int j = 0; j < subList.size(); j++) {
-                        if (subList.get(j) < list.get(pivot)) {
-                            synchronized (smallerThanPivot) {
-                                smallerThanPivot.add(subList.get(j));
+                        int value = subList.get(j);
+                        if (value < pivotValue) {
+                            localSmallerThanPivot.add(value);
+                            if (localSmallerThanPivot.size() == 100 || (j + 1) == subList.size()) {
+                                synchronized (smallerThanPivot) {
+                                    smallerThanPivot.addAll(localSmallerThanPivot);
+                                }
                             }
-                        } else if (Objects.equals(subList.get(j), list.get(pivot))) {
-                            synchronized (equalsToPivot) {
-                                equalsToPivot.add(subList.get(j));
+                        } else if (Objects.equals(value, pivotValue)) {
+                            localEqualsToPivot.add(value);
+                            if (localEqualsToPivot.size() == 100 || (j + 1) == subList.size()) {
+                                synchronized (equalsToPivot) {
+                                    equalsToPivot.addAll(localEqualsToPivot);
+                                }
                             }
                         } else {
-                            synchronized (biggerThanPivot) {
-                                biggerThanPivot.add(subList.get(j));
+                            localBiggerThanPivot.add(value);
+                            if (localBiggerThanPivot.size() == 100 || (j + 1) == subList.size()) {
+                                synchronized (biggerThanPivot) {
+                                    biggerThanPivot.addAll(localBiggerThanPivot);
+                                }
                             }
                         }
                     }
@@ -68,28 +89,40 @@ public class MedianFinderSynchronised extends Thread {
             t.start();
             threadList[i] = t;
         }
+        // Join isn't working correctly because length of all lists together are not the total list size
         for (Thread t : threadList) {
+
+            System.out.println("---------------------THREAD--------------------------");
+            System.out.println("smallerThanPivot: " + smallerThanPivot.size());
+            System.out.println("equalsToPivot: " + equalsToPivot.size());
+            System.out.println("biggerThanPivot: " + biggerThanPivot.size());
+            System.out.println("-------------------THREAD END----------------------------");
             t.join();
         }
+        System.out.println("-----------------------------------------------");
+        System.out.println("total list: " + list.size());
+        System.out.println("smallerThanPivot: " + smallerThanPivot.size());
+        System.out.println("equalsToPivot: " + equalsToPivot.size());
+        System.out.println("biggerThanPivot: " + biggerThanPivot.size());
+        System.out.println("-----------------------------------------------");
 
-        if (smallerThanPivot.size()
-                > targetIndex) {
+        if (smallerThanPivot.size() > targetIndex) {
             return findMedian(smallerThanPivot, targetIndex);
         } else if ((smallerThanPivot.size() + equalsToPivot.size()) > targetIndex) {
-            return list.get(pivot);
+            return pivotValue;
         } else {
             return findMedian(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size());
         }
 
     }
 
-    public int findrealMedian(ArrayList<Integer> list) throws InterruptedException {
+    int findRealMedian(ArrayList<Integer> list) throws InterruptedException {
 
         int targetIndex = divideArrayList(list);
         return findMedian(list, targetIndex);
     }
 
-    public int divideArrayList(ArrayList<Integer> list) {
+    private int divideArrayList(ArrayList<Integer> list) {
         if (list.size() % 2 == 1) {
             return (list.size() - 1) / 2;
         } else {
@@ -97,7 +130,7 @@ public class MedianFinderSynchronised extends Thread {
         }
     }
 
-    public int findPivot(ArrayList<Integer> list) {
+    private int findPivot(ArrayList<Integer> list) {
         return ThreadLocalRandom.current().nextInt(0, list.size());
     }
 

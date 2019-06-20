@@ -35,7 +35,7 @@ public class MedianSynchronised {
 
         ArrayList<Integer> list = readCsv.readFile();
         long start = System.currentTimeMillis();
-        System.out.println("Median is " + medianFinder.findrealMedian(list));
+        System.out.println("Median is " + medianFinder.findRealMedian(list));
         System.out.println("Median found in time: " + (System.currentTimeMillis() - start) + " ms");
         System.out.println("Available processors: " 
                 + Runtime.getRuntime().availableProcessors());
