@@ -22,51 +22,98 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class ReadCsv extends Thread {
 
-    long start = System.currentTimeMillis();
+    ArrayList<Integer> numberOfRecords;
+    public ArrayList<ArrayList<Integer>> allNumberOfRecordsForAllDataSets = new ArrayList<>();
 
-    public final ArrayList<Integer> OVERALL_QUALITY = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>>  readFile() throws FileNotFoundException, IOException, InterruptedException {
 
-    public ArrayList<Integer> readFile() throws FileNotFoundException, IOException, InterruptedException {
+        long startTotal = System.currentTimeMillis();
 
-        String[] fileNames = {"..\\resources\\winequality-red-part-1.csv",
-            "..\\resources\\winequality-red-part-2.csv",
-            "..\\resources\\winequality-white-part-1.csv",
-            "..\\resources\\winequality-white-part-2.csv"};
+        ArrayList<String[]> dataSet = new ArrayList<>();
+        Thread[] threadList = null;
 
-        Thread[] threadList = new Thread[fileNames.length];
+        dataSet.add(new String[]{"..\\resources\\dataSet1\\winequality-red-part-1.csv",
+            "..\\resources\\dataSet1\\winequality-red-part-2.csv",
+            "..\\resources\\dataSet1\\winequality-white-part-1.csv",
+            "..\\resources\\dataSet1\\winequality-white-part-2.csv"});
 
-        for (int i = 0; i < fileNames.length; i++) {
-            final int j = i;
-            Thread t = new Thread(() -> {
-                try {
-                    BufferedReader in = new BufferedReader(new FileReader(fileNames[j]));
+        dataSet.add(new String[]{"..\\resources\\dataSet2\\winequality-red-part-1.csv",
+            "..\\resources\\dataSet2\\winequality-red-part-1.1.csv",
+            "..\\resources\\dataSet2\\winequality-red-part-2.csv",
+            "..\\resources\\dataSet2\\winequality-red-part-2.1.csv",
+            "..\\resources\\dataSet2\\winequality-white-part-1.csv",
+            "..\\resources\\dataSet2\\winequality-white-part-1.1.csv",
+            "..\\resources\\dataSet2\\winequality-white-part-2.csv",
+            "..\\resources\\dataSet2\\winequality-white-part-2.1.csv"});
 
-                    Iterable<CSVRecord> records = CSVFormat.EXCEL.withDelimiter(';').withFirstRecordAsHeader().parse(in);
-                    int counter = 0;
-                            System.out.println("starting recordcount " + j);
-                    for (CSVRecord record : records) {
+        dataSet.add(new String[]{"..\\resources\\dataSet3\\winequality-red-part-1.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-1.1.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-1.2.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-1.3.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-2.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-2.1.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-2.2.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-2.3.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-1.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-1.1.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-1.2.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-1.3.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-2.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-2.1.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-2.2.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-2.3.csv"});
 
-                        counter = counter + 1;
-                        synchronized (OVERALL_QUALITY) {
-                            OVERALL_QUALITY.add(Integer.parseInt(record.get("quality")));
-                        }
+       for (int i = 0; i < dataSet.size(); i++) {
+            long start = System.currentTimeMillis();
+            numberOfRecords = new ArrayList<>();
+
+            String[] fileNames = dataSet.get(i);
+            threadList = new Thread[fileNames.length];
+            for (int k = 0; k < fileNames.length; k++) {
+                final int l = k;
+                Thread t = new Thread(() -> {
+                    try {
+                        parseFile(fileNames[l]);
+
+                    } catch (IOException | NumberFormatException e) {
+                        System.out.println("No .csv files are read");
+                        throw new Error(e);
                     }
-                    System.out.println("number of quality record: " + counter + " in thread " + j);
-                } catch (IOException | NumberFormatException e) {
-                    System.out.println("No .csv files are read");
-                    throw new Error(e);
-                }
-            });
-            System.out.println("starting thread " + t);
-            t.start();
-            threadList[j] = t;
+                });
+
+                System.out.println("starting thread " + t);
+                t.start();
+                threadList[k] = t;
+            }
+
+            for (Thread threadList1 : threadList) {
+                threadList1.join();
+            }
+            allNumberOfRecordsForAllDataSets.add(numberOfRecords);
+            System.out.println("ReadFile, time: "
+                    + (System.currentTimeMillis() - start) + " ms");
+            System.out.println("Number of threads started: " + threadList.length);
+            System.out.println("Recordnr of dataSet " + (i + 1) + ": "
+                    + numberOfRecords.size());
         }
-        for (int i = 0; i < threadList.length; i++) {
-            threadList[i].join();
+
+        System.out.println("ReadFile for all dataSets, totall time: "
+                + (System.currentTimeMillis() - startTotal) + " ms");
+
+        return allNumberOfRecordsForAllDataSets;
+    }
+    public void parseFile(String fileName) throws IOException {
+
+        BufferedReader inDataSet = new BufferedReader(new FileReader(fileName));
+
+        Iterable<CSVRecord> records = CSVFormat.EXCEL.
+                withDelimiter(';').
+                withFirstRecordAsHeader().
+                parse(inDataSet);
+        for (CSVRecord record : records) {
+            synchronized (numberOfRecords) {
+                numberOfRecords.add(Integer.parseInt(record.get("quality")));
+            }
         }
-        System.out.println("Length of overallQuality is " + OVERALL_QUALITY.size());
-        System.out.println("ReadFile, time: " 
-                + (System.currentTimeMillis() - start) + " ms");
-        return OVERALL_QUALITY;
     }
 }

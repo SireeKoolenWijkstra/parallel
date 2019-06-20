@@ -14,30 +14,44 @@ import java.util.ArrayList;
  */
 public class MedianSynchronised {
 
+    private static final long MEGABYTE = 1024L * 1024L;
+    private static String format = "%-40s%s%n";
+
+    public static long bytesToMegabytes(long bytes) {
+        return bytes / MEGABYTE;
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException, InterruptedException {
-        
-//        ArrayList<Integer> testCase = new ArrayList<Integer>();//Creating arraylist
-//        testCase.add(10);//Adding object in arraylist    
-//        testCase.add(17);
-//        testCase.add(12);
-        //testCase.add(13);
-        //testCase.add(14);
-        //testCase.add(15);
+
         ReadCsv readCsv = new ReadCsv();
-        
         MedianFinderSynchronised medianFinder = new MedianFinderSynchronised();
 
-        System.out.println("Working Directory = "
-                + System.getProperty("user.dir"));
-
-        ArrayList<Integer> list = readCsv.readFile();
+        ArrayList<ArrayList<Integer>> dataSet = readCsv.readFile();
         long start = System.currentTimeMillis();
-        System.out.println("Median is " + medianFinder.findRealMedian(list));
-        System.out.println("Median found in time: " + (System.currentTimeMillis() - start) + " ms");
-        System.out.println("Available processors: " 
-                + Runtime.getRuntime().availableProcessors());
+        for (int i = 0; i < dataSet.size(); i++) {
+            System.out.println("Median of dataset "
+                    + (i + 1)
+                    + " is "
+                    + medianFinder.findRealMedian(dataSet.get(i)));
+
+            System.out.println("Median found in time: " + (System.currentTimeMillis() - start) + " ms");
+            System.out.println("Available processors: "
+                    + Runtime.getRuntime().availableProcessors());
+        }
+
+        // Get the Java runtime
+        Runtime runtime = Runtime.getRuntime();
+        // Run the garbage collector
+        runtime.gc();
+
+        // Calculate the used memory
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.printf(format, "Used memory is bytes: ", memory);
+        System.out.printf(format, "Used memory is megabytes: ",
+                bytesToMegabytes(memory));
+
     }
 }

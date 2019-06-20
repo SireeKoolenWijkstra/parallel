@@ -15,6 +15,13 @@ import java.util.Arrays;
  */
 public class MedianProducerConsumer {
 
+    private static final long MEGABYTE = 1024L * 1024L;
+    private static String format = "%-40s%s%n";
+
+    public static long bytesToMegabytes(long bytes) {
+        return bytes / MEGABYTE;
+    }
+
     /**
      * @param args the command line arguments
      * @throws java.lang.InterruptedException
@@ -25,12 +32,26 @@ public class MedianProducerConsumer {
         FindMedianProducerConsumer findMedianPC = new FindMedianProducerConsumer();
         ReadCsvProducerConsumer csv = new ReadCsvProducerConsumer();
 
-        ArrayList<Integer> wineList =  csv.readFile();
+        ArrayList<ArrayList<Integer>> dataSet = csv.readFile();
         long start = System.currentTimeMillis();
-        System.out.println("Median is " + findMedianPC.findMedianProducerConsumer(wineList));
-        System.out.println("Median found in time: " + (System.currentTimeMillis() - start) + " ms");
-        System.out.println("Available processors: " 
-                + Runtime.getRuntime().availableProcessors());
+        for (int i = 0; i < dataSet.size(); i++) {
+            System.out.println("Median of dataset " + (i + 1)
+                    + " is " + findMedianPC.findMedianProducerConsumer(dataSet.get(i)));
+
+            System.out.println("Median found in time: " + (System.currentTimeMillis() - start) + " ms");
+            System.out.println("Available processors: "
+                    + Runtime.getRuntime().availableProcessors());
+        }
+         // Get the Java runtime
+            Runtime runtime = Runtime.getRuntime();
+            // Run the garbage collector
+            runtime.gc();
+
+            // Calculate the used memory
+            long memory = runtime.totalMemory() - runtime.freeMemory();
+            System.out.printf(format, "Used memory is bytes: ", memory);
+            System.out.printf(format, "Used memory is megabytes: ",
+                    bytesToMegabytes(memory));
 
     }
 

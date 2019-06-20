@@ -6,10 +6,7 @@
 package com.mycompany.mediaansequential;
 
 import java.io.IOException;
-import static java.lang.String.format;
-import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
-import java.lang.management.OperatingSystemMXBean;
 
 /**
  *
@@ -31,17 +28,21 @@ public class MediaanSequential {
     public static void main(String[] args) throws IOException {
 
         ReadCsv readCsv = new ReadCsv();
-
         MedianFinder medianFinder = new MedianFinder();
 
         System.out.println("Working Directory = "
                 + System.getProperty("user.dir"));
 
-        ArrayList<Integer> list = readCsv.readFile();
+        ArrayList<ArrayList<Integer>> dataSet = readCsv.readFile();
         long start = System.currentTimeMillis();
-        System.out.println("Median is " + medianFinder.findrealMedian(list));
+        for (int i=0; i< dataSet.size(); i++){
+            System.out.println("Median of dataset " + (i+1)
+                + " is " + medianFinder.findrealMedian(dataSet.get(i)));
         System.out.println("Median found in time: "
                 + (System.currentTimeMillis() - start) + " ms");
+            
+        }
+        
         System.out.println("Available processors: " 
                 + Runtime.getRuntime().availableProcessors());
         

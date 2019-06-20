@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license header, choose License Headers inDataSet1 Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template inDataSet1 the editor.
  */
 package com.mycompany.mediaansequential;
 
@@ -24,35 +24,76 @@ public class ReadCsv {
 
     long start = System.currentTimeMillis();
 
-    public ArrayList<Integer> overallQuality = new ArrayList<>();
+    public ArrayList<Integer> numberOfRecords = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> allNumberOfRecordsForAllDataSets = new ArrayList<>();
 
-    public ArrayList<Integer> readFile() throws FileNotFoundException, IOException {
+    public ArrayList<ArrayList<Integer>> readFile() throws FileNotFoundException, IOException {
 
-        String[] fileNames
-                = {"..\\resources\\winequality-red-part-1.csv",
-                    "..\\resources\\winequality-red-part-2.csv",
-                    "..\\resources\\winequality-white-part-1.csv",
-                    "..\\resources\\winequality-white-part-2.csv"};
+        ArrayList<String[]> dataSet = new ArrayList<>();
+
+        dataSet.add(new String[]{"..\\resources\\dataSet1\\winequality-red-part-1.csv",
+            "..\\resources\\dataSet1\\winequality-red-part-2.csv",
+            "..\\resources\\dataSet1\\winequality-white-part-1.csv",
+            "..\\resources\\dataSet1\\winequality-white-part-2.csv"});
+
+        dataSet.add(new String[]{"..\\resources\\dataSet2\\winequality-red-part-1.csv",
+            "..\\resources\\dataSet2\\winequality-red-part-1.1.csv",
+            "..\\resources\\dataSet2\\winequality-red-part-2.csv",
+            "..\\resources\\dataSet2\\winequality-red-part-2.1.csv",
+            "..\\resources\\dataSet2\\winequality-white-part-1.csv",
+            "..\\resources\\dataSet2\\winequality-white-part-1.1.csv",
+            "..\\resources\\dataSet2\\winequality-white-part-2.csv",
+            "..\\resources\\dataSet2\\winequality-white-part-2.1.csv"});
+
+        dataSet.add(new String[]{"..\\resources\\dataSet3\\winequality-red-part-1.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-1.1.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-1.2.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-1.3.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-2.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-2.1.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-2.2.csv",
+            "..\\resources\\dataSet3\\winequality-red-part-2.3.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-1.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-1.1.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-1.2.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-1.3.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-2.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-2.1.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-2.2.csv",
+            "..\\resources\\dataSet3\\winequality-white-part-2.3.csv"});
         try {
-            for (String fileName : fileNames) {
-                BufferedReader in = new BufferedReader(new FileReader(fileName));
-                
-                Iterable<CSVRecord> records = CSVFormat.EXCEL
-                        .withDelimiter(';')
-                        .withFirstRecordAsHeader()
-                        .parse(in);
-                for (CSVRecord record : records) {
-                    overallQuality.add(Integer.parseInt(record.get("quality")));
-                }
+            for (int i = 0; i < dataSet.size(); i++) {
+                parseFile(dataSet.get(i));
+                System.out.println("Recordnr of dataSet " + (i +1) + ": "
+                        + numberOfRecords.size());
+                System.out.println("ReadFile, time: "
+                        + (System.currentTimeMillis() - start) + " ms");
+                allNumberOfRecordsForAllDataSets.add(numberOfRecords);
             }
-            System.out.println("Length of overallQuality is "
-                    + overallQuality.size());
-            System.out.println("ReadFile, time: "
+            System.out.println("ReadFile for all dataSets, totall time: "
                     + (System.currentTimeMillis() - start) + " ms");
-            return overallQuality;
+
+            return allNumberOfRecordsForAllDataSets;
         } catch (IOException | NumberFormatException e) {
             System.out.print("No .csv files are read");
             throw e;
         }
+    }
+
+    public void parseFile(String[] dataSet) throws FileNotFoundException, IOException {
+        for (String fileName : dataSet) {
+            BufferedReader inDataSet = new BufferedReader(new FileReader(fileName));
+
+            Iterable<CSVRecord> records = CSVFormat.EXCEL
+                    .withDelimiter(';')
+                    .withFirstRecordAsHeader()
+                    .parse(inDataSet);
+            for (CSVRecord record : records) {
+                numberOfRecords.add(Integer.parseInt(record.get("quality")));
+
+            }
+
+        }
+
     }
 }
