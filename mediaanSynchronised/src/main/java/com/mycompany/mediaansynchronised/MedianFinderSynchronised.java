@@ -66,6 +66,7 @@ class MedianFinderSynchronised extends Thread {
                             if (localSmallerThanPivot.size() == 100 || (j + 1) == subList.size()) {
                                 synchronized (smallerThanPivot) {
                                     smallerThanPivot.addAll(localSmallerThanPivot);
+                                    localSmallerThanPivot.clear();
                                 }
                             }
                         } else if (Objects.equals(value, pivotValue)) {
@@ -73,6 +74,7 @@ class MedianFinderSynchronised extends Thread {
                             if (localEqualsToPivot.size() == 100 || (j + 1) == subList.size()) {
                                 synchronized (equalsToPivot) {
                                     equalsToPivot.addAll(localEqualsToPivot);
+                                    localEqualsToPivot.clear();
                                 }
                             }
                         } else {
@@ -80,6 +82,7 @@ class MedianFinderSynchronised extends Thread {
                             if (localBiggerThanPivot.size() == 100 || (j + 1) == subList.size()) {
                                 synchronized (biggerThanPivot) {
                                     biggerThanPivot.addAll(localBiggerThanPivot);
+                                    localBiggerThanPivot.clear();
                                 }
                             }
                         }
@@ -92,11 +95,11 @@ class MedianFinderSynchronised extends Thread {
         // Join isn't working correctly because length of all lists together are not the total list size
         for (Thread t : threadList) {
 
-            System.out.println("---------------------THREAD--------------------------");
-            System.out.println("smallerThanPivot: " + smallerThanPivot.size());
-            System.out.println("equalsToPivot: " + equalsToPivot.size());
-            System.out.println("biggerThanPivot: " + biggerThanPivot.size());
-            System.out.println("-------------------THREAD END----------------------------");
+//            System.out.println("---------------------THREAD--------------------------");
+//            System.out.println("smallerThanPivot: " + smallerThanPivot.size());
+//            System.out.println("equalsToPivot: " + equalsToPivot.size());
+//            System.out.println("biggerThanPivot: " + biggerThanPivot.size());
+//            System.out.println("-------------------THREAD END----------------------------");
             t.join();
         }
         System.out.println("-----------------------------------------------");
