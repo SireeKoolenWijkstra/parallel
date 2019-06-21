@@ -5,11 +5,8 @@
  */
 package com.mycompany.mediaanproducerconsumer;
 
-import com.mycompany.mediaanproducerconsumer.Objects.WineQuality;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
@@ -29,43 +26,32 @@ public class FindMedianProducerConsumer {
 
     }
 
-    public void SingleProducerSingleConsumer(ArrayList<Integer> wineList, int queueCapacity,
-            int pivotValue, ArrayList<Integer> smallerThanPivot, ArrayList<Integer> equalsToPivot,
-            ArrayList<Integer> biggerThanPivot) throws InterruptedException {
+    public void SingleProducerSingleConsumer(DataHandler dataHandler,
+            int pivotValue) throws InterruptedException {
+
+        final int MAX_WORKERS = 8;
 
         ExecutorService executorService = Executors.newCachedThreadPool();
-        BlockingQueue<WineQuality> queue = new ArrayBlockingQueue<>(queueCapacity);
 
-        Producer producer = new Producer(wineList, queue);
-        Consumer consumer = new Consumer(queue, 1, pivotValue, smallerThanPivot,
-                    equalsToPivot, biggerThanPivot);
-        executorService.submit(producer);
-        executorService.submit(consumer);
+        for (int i = 0; i < MAX_WORKERS; i++) {
+            int id = i + 1;
+            Divider consumer = new Divider(dataHandler, id, pivotValue);
 
-//        int cores = Runtime.getRuntime().availableProcessors();
-//
-//        for (int i = 0; i < cores; i++) {
-//            Consumer consumer = new Consumer(queue, 1, pivotValue, smallerThanPivot,
-//                    equalsToPivot, biggerThanPivot);
-//            executorService.submit(consumer);
-//        }
-        
+            executorService.submit(consumer);
+        }
+
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.DAYS);
-
 
     }
 
     public int compareArraysToTargetIndex(ArrayList<Integer> list, int targetIndex) {
 
-        ArrayList<Integer> smallerThanPivot = new ArrayList<>();
-        ArrayList<Integer> equalsToPivot = new ArrayList<>();
-        ArrayList<Integer> biggerThanPivot = new ArrayList<>();
-
         int pivotValue = findPivot(list);
+        DataHandler dataHandler = new DataHandler(list);
 
         try {
-            SingleProducerSingleConsumer(list, 20, pivotValue, smallerThanPivot, equalsToPivot, biggerThanPivot);
+            SingleProducerSingleConsumer(dataHandler, pivotValue);
         } catch (InterruptedException ex) {
             Logger.getLogger(FindMedianProducerConsumer.class.getName()).log(Level.SEVERE, null, ex);
             throw new Error(ex);
@@ -81,12 +67,13 @@ public class FindMedianProducerConsumer {
             countRandom++;
         }
 
-        if (smallerThanPivot.size() > targetIndex) {
-            return compareArraysToTargetIndex(smallerThanPivot, targetIndex);
-        } else if ((smallerThanPivot.size() + equalsToPivot.size()) > targetIndex) {
+        if (dataHandler.smallerThanPivot.size() > targetIndex) {
+            return compareArraysToTargetIndex(dataHandler.smallerThanPivot, targetIndex);
+        } else if ((dataHandler.smallerThanPivot.size() + dataHandler.equalsToPivot.size()) > targetIndex) {
             return pivotValue;
         } else {
-            return compareArraysToTargetIndex(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size());
+            return compareArraysToTargetIndex(dataHandler.biggerThanPivot, targetIndex
+                    - dataHandler.smallerThanPivot.size() - dataHandler.equalsToPivot.size());
         }
     }
 
