@@ -24,21 +24,32 @@ public class MedianFinder {
         ArrayList<Integer> equalsToPivot = new ArrayList<>();
 
         int pivot = findPivot(list);
-        int countRandom = 0;
-        // Code so that finding the median will take time
-        Random random = new Random();
-        int j = ((random.nextInt(50)) + 1) * 1000000;
-
-        //Act
-        for (int i = 0; i < j; i++) {
-            countRandom++;
-        }
+//        int countRandom = 0;
+//        // Code so that finding the median will take time
+//        Random random = new Random();
+//        int k = ((random.nextInt(80)) + 1) * 15000000;
+//
+//        //Act
+//        for (int i = 0; i < k; i++) {
+//            countRandom++;
+//        }
 
         for (int i = 0; i < list.size(); i++) {
+            
+
+            int countRandom = 0;
+            // Code so that finding the median will take time
+            Random random = new Random();
+            int k = ((random.nextInt(80)) + 1) * 15000000;
+
+            //Act
+            for (int j = 0; j < k; j++) {
+                countRandom++;
+            }
+
             if (list.get(i) < list.get(pivot)) {
                 smallerThanPivot.add(list.get(i));
-            } 
-             else if (Objects.equals(list.get(i), list.get(pivot))) {
+            } else if (Objects.equals(list.get(i), list.get(pivot))) {
                 equalsToPivot.add(list.get(i));
             } else {
                 biggerThanPivot.add(list.get(i));
@@ -53,8 +64,7 @@ public class MedianFinder {
         } else {
             return findMedian(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size());
         }
-        
-        
+
     }
 
     public int findrealMedian(ArrayList<Integer> list) {
@@ -75,5 +85,3 @@ public class MedianFinder {
     }
 
 }
-
-

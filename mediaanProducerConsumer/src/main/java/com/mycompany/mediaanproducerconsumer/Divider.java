@@ -16,7 +16,7 @@ public class Divider extends Thread {
 
     final DataHandler dataHandler;
     private final int id;
-    private int jobsProcessed;
+    //private int jobsProcessed;
     private final int pivotValue;
 
      
@@ -25,7 +25,7 @@ public class Divider extends Thread {
         this.dataHandler = dataHandler; 
         this.id = id;
         this.pivotValue = pivotValue;        
-        this.jobsProcessed = 0;
+       // this.jobsProcessed = 0;
     }
 
     @Override
@@ -36,7 +36,10 @@ public class Divider extends Thread {
                 if (work == null) {
                     break;
                 }
+               
                 for (int i = work.get(0); i < (work.get(1)+1); i++) {
+                    //jobsProcessed++;
+                    
                     int value = dataHandler.dataSet.get(i);
                     if (value < pivotValue) {
                         synchronized (dataHandler.smallerThanPivot) {
@@ -51,13 +54,13 @@ public class Divider extends Thread {
                             dataHandler.biggerThanPivot.add(value);
                         }
                     }
-                    jobsProcessed++;
+                    
                 }
             } catch (Throwable e) {
                 e.printStackTrace();
                 throw e;
             }
         }
-        System.out.println("Consumer " + id + " processed " + jobsProcessed);
+        //System.out.println("Divider " + id + " processed " + jobsProcessed);
     }
 }

@@ -7,7 +7,6 @@ package com.mycompany.mediaanproducerconsumer;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  *
@@ -39,19 +38,21 @@ public class MedianProducerConsumer {
                     + " is " + findMedianPC.findMedianProducerConsumer(dataSet.get(i)));
 
             System.out.println("Median found in time: " + (System.currentTimeMillis() - start) + " ms");
-            System.out.println("Available processors: "
-                    + Runtime.getRuntime().availableProcessors());
-        }
-         // Get the Java runtime
-            Runtime runtime = Runtime.getRuntime();
-            // Run the garbage collector
-            runtime.gc();
+            System.out.println("-------------------------------------------------------------------------");
 
-            // Calculate the used memory
-            long memory = runtime.totalMemory() - runtime.freeMemory();
-            System.out.printf(format, "Used memory is bytes: ", memory);
-            System.out.printf(format, "Used memory is megabytes: ",
-                    bytesToMegabytes(memory));
+        }
+        // Get the Java runtime
+        Runtime runtime = Runtime.getRuntime();
+        // Run the garbage collector
+        runtime.gc();
+
+        System.out.println("Available processors: "
+                + Runtime.getRuntime().availableProcessors());
+        // Calculate the used memory
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.printf(format, "Used memory is bytes: ", memory);
+        System.out.printf(format, "Used memory is megabytes: ",
+                bytesToMegabytes(memory));
 
     }
 

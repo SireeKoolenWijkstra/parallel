@@ -45,40 +45,22 @@ public class MedianFinder1 {
         equalsToPivot = new ArrayList<>();
         biggerThanPivot = new ArrayList<>();
 
+        int countRandom = 0;
+        // Code so that finding the median will take time
+        Random random = new Random();
+        int k = ((random.nextInt(80)) + 1) * 15000000;
+
+        for (int i1 = 0; i1 < k; i1++) {
+            countRandom++;
+        }
+
         for (int i = 0; i < list.size(); i++) {
             int value = list.get(i);
             if (value < pivotValue) {
-                int countRandom = 0;
-                // Code so that finding the median will take time
-                Random random = new Random();
-                int k = ((random.nextInt(50)) + 1) * 1000000;
-
-                //Act
-                for (int j = 0; j < k; j++) {
-                    countRandom++;
-                }
                 smallerThanPivot.add(value);
             } else if (value == pivotValue) {
-                int countRandom = 0;
-                // Code so that finding the median will take time
-                Random random = new Random();
-                int k = ((random.nextInt(50)) + 1) * 1000000;
-
-                //Act
-                for (int j = 0; j < k; j++) {
-                    countRandom++;
-                }
                 equalsToPivot.add(value);
             } else {
-                int countRandom = 0;
-                // Code so that finding the median will take time
-                Random random = new Random();
-                int k = ((random.nextInt(50)) + 1) * 1000000;
-
-                //Act
-                for (int j = 0; j < k; j++) {
-                    countRandom++;
-                }
                 biggerThanPivot.add(value);
             }
         }

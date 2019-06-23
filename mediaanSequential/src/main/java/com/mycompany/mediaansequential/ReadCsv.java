@@ -24,7 +24,7 @@ public class ReadCsv {
 
     long start = System.currentTimeMillis();
 
-    public ArrayList<Integer> numberOfRecords = new ArrayList<>();
+    public ArrayList<Integer> numberOfRecords;
     public ArrayList<ArrayList<Integer>> allNumberOfRecordsForAllDataSets = new ArrayList<>();
 
     public ArrayList<ArrayList<Integer>> readFile() throws FileNotFoundException, IOException {
@@ -63,11 +63,13 @@ public class ReadCsv {
             "..\\resources\\dataSet3\\winequality-white-part-2.3.csv"});
         try {
             for (int i = 0; i < dataSet.size(); i++) {
+                long startDataSet = System.currentTimeMillis();
+                numberOfRecords = new ArrayList<>();
                 parseFile(dataSet.get(i));
                 System.out.println("Recordnr of dataSet " + (i +1) + ": "
                         + numberOfRecords.size());
                 System.out.println("ReadFile, time: "
-                        + (System.currentTimeMillis() - start) + " ms");
+                        + (System.currentTimeMillis() - startDataSet) + " ms");
                 allNumberOfRecordsForAllDataSets.add(numberOfRecords);
             }
             System.out.println("ReadFile for all dataSets, totall time: "
