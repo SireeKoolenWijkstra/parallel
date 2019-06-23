@@ -19,54 +19,68 @@ import java.util.ArrayList;
  * @author Tamara
  */
 public class ReadCsv {
-    long start = System.currentTimeMillis();
 
-    private static final String FILE_PATH = "..\\resources\\winequality-white-part-2.csv";
-    public ArrayList<Integer> overallQuality = new ArrayList<>();
+    private long startTotal = System.currentTimeMillis();
+    private ArrayList<Integer> overallQuality = new ArrayList<>();
 
-    //Delimiters used in the CSV file
-    private static final String COMMA_DELIMITER = ",";
+    // reads the csv file, you can comment out the
+    ArrayList<Integer> readFile() {
 
-    public ArrayList<Integer> readFile() throws IOException {
+        ArrayList<String> dataSet = new ArrayList<>();
 
+
+        // dataset 1n
+        dataSet.add("..\\resources\\dataSet1\\winequality-white-part-2.csv");
+
+        // dataset 2n
+//        dataSet.add("..\\resources\\dataSet2\\winequality-white-part-2.csv");
+//        dataSet.add("..\\resources\\dataSet2\\winequality-white-part-2.1.csv");
+
+        // dataset 4n
+//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.csv");
+//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.1.csv");
+//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.2.csv");
+//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.3.csv");
+
+        Thread[] threadList = new Thread[dataSet.size()];
         BufferedReader br = null;
-
-        try {
-//            br = new BufferedReader(new FileReader(FILE_PATH));
-//            String line = "";
-//            br.readLine();
-//            while ((line = br.readLine()) != null) {
-//                String[] quality = line.split(COMMA_DELIMITER);
-//                overallQuality.add(Integer.parseInt());
-//            }
-
-
-            BufferedReader in = new BufferedReader(new FileReader(FILE_PATH));
-            Iterable<CSVRecord> records = CSVFormat.EXCEL
-                    .withDelimiter(';')
-                    .withFirstRecordAsHeader()
-                    .parse(in);
-            for (CSVRecord record : records) {
-                overallQuality.add(Integer.parseInt(record.get("quality")));
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException | NumberFormatException e) {
-            System.out.print("No .csv files are read");
-            throw e;
-        } finally {
-            if (br != null) {
+        for (int i = 0; i < dataSet.size(); i++) {
+            final int j = i;
+            Thread t = new Thread(() -> {
                 try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                    BufferedReader in = new BufferedReader(new FileReader(dataSet.get(j)));
+                    Iterable<CSVRecord> records = CSVFormat.EXCEL
+                            .withDelimiter(';')
+                            .withFirstRecordAsHeader()
+                            .parse(in);
+                    for (CSVRecord record : records) {
+                        overallQuality.add(Integer.parseInt(record.get("quality")));
+                    }
+
+                } catch (IOException | NumberFormatException e) {
+                    System.out.println("No .csv files are read");
+                    throw new Error(e);
                 }
+            });
+            System.out.println("starting thread " + t);
+            t.start();
+            threadList[i] = t;
+        }
+
+        for (Thread threadList1 : threadList) {
+            try {
+                threadList1.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
+
         String format = "%-25s%s%n";
-//        System.out.printf(format, "Length of list VM4: ", overallQuality.size());
-        System.out.printf(format, "ReadFile time VM_4: ", (System.currentTimeMillis() - start) + " ms");
+        //System.out.printf(format, "Length of list VM1: ", overallQuality.size());
+        System.out.printf(format, "Number of threads started: ", threadList.length);
+        System.out.printf(format, "Datasize is: ", dataSet.size() + "n");
+        System.out.printf(format, "ReadFile time VM_1: ", (System.currentTimeMillis() - startTotal) + " ms");
         return overallQuality;
     }
 }

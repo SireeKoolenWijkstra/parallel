@@ -25,7 +25,7 @@ public class ReadCsv extends Thread {
     ArrayList<Integer> numberOfRecords;
     public ArrayList<ArrayList<Integer>> allNumberOfRecordsForAllDataSets = new ArrayList<>();
 
-    public ArrayList<ArrayList<Integer>>  readFile() throws FileNotFoundException, IOException, InterruptedException {
+    public ArrayList<ArrayList<Integer>>  readFile() throws InterruptedException {
 
         long startTotal = System.currentTimeMillis();
 
@@ -97,7 +97,7 @@ public class ReadCsv extends Thread {
                     + numberOfRecords.size());
         }
 
-        System.out.println("ReadFile for all dataSets, totall time: "
+        System.out.println("ReadFile for all dataSets, total time: "
                 + (System.currentTimeMillis() - startTotal) + " ms");
 
         return allNumberOfRecordsForAllDataSets;
