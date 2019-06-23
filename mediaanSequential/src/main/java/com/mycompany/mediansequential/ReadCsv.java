@@ -29,10 +29,10 @@ class ReadCsv {
         ArrayList<String> dataSet = new ArrayList<>();
 
         // dataset 1n
-        dataSet.add("..\\resources\\dataSet1\\winequality-red-part-1.csv");
-        dataSet.add("..\\resources\\dataSet1\\winequality-red-part-2.csv");
-        dataSet.add("..\\resources\\dataSet1\\winequality-white-part-1.csv");
-        dataSet.add("..\\resources\\dataSet1\\winequality-white-part-2.csv");
+//        dataSet.add("..\\resources\\dataSet1\\winequality-red-part-1.csv");
+//        dataSet.add("..\\resources\\dataSet1\\winequality-red-part-2.csv");
+//        dataSet.add("..\\resources\\dataSet1\\winequality-white-part-1.csv");
+//        dataSet.add("..\\resources\\dataSet1\\winequality-white-part-2.csv");
 
         // dataset 2n
 //        dataSet.add("..\\resources\\dataSet2\\winequality-red-part-1.csv");
@@ -45,22 +45,22 @@ class ReadCsv {
 //        dataSet.add("..\\resources\\dataSet2\\winequality-white-part-2.1.csv");
 
         // dataset 4n
-//        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-1.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-1.1.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-1.2.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-1.3.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-2.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-2.1.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-2.2.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-2.3.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-1.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-1.1.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-1.2.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-1.3.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.1.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.2.csv");
-//        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.3.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-1.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-1.1.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-1.2.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-1.3.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-2.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-2.1.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-2.2.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-red-part-2.3.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-1.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-1.1.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-1.2.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-1.3.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.1.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.2.csv");
+        dataSet.add("..\\resources\\dataSet3\\winequality-white-part-2.3.csv");
 
         try {
 
