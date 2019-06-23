@@ -35,8 +35,8 @@ public class FindMedianProducerConsumerTest {
      * Test of FindMedianProducerConsumer method, of class
      * FindMedianProducerConsumer.
      */
-    @Test (expected = NullPointerException.class)
-    public void testFindMedianProducerConsumerTestWithListNullShouldReturnNullPointerException() {
+    @Test(expected = NullPointerException.class)
+    public void testFindMedianProducerConsumerTest_WithListNull_ShouldReturnNullPointerException() {
         //Arrange
         ArrayList<Integer> testWithNull = new ArrayList<>();
         System.out.println("FindMedianProducerConsumerTesttWithNull");
@@ -51,7 +51,7 @@ public class FindMedianProducerConsumerTest {
      * FindMedianProducerConsumer.
      */
     @Test
-    public void testFindMedianProducerConsumerTestWithListSizeOneShouldReturn1() {
+    public void testFindMedianProducerConsumerTest_WithListSizeOne_ShouldReturn1() {
         //Arrange
         ArrayList<Integer> testWithListSizeOne = new ArrayList<>();
         System.out.println("FindMedianProducerConsumerTestWithListSizeOne");
@@ -69,7 +69,7 @@ public class FindMedianProducerConsumerTest {
      * FindMedianProducerConsumer.
      */
     @Test
-    public void testFindMedianProducerConsumerTestWithListSizeEvenShouldReturn3() {
+    public void testFindMedianProducerConsumerTest_WithListSizeEven_ShouldReturn3() {
         //Arrange
         System.out.println("FindMedianProducerConsumerTestWithListSizeEven");
 
@@ -92,7 +92,7 @@ public class FindMedianProducerConsumerTest {
      * FindMedianProducerConsumer.
      */
     @Test
-    public void testFindMedianProducerConsumerTestWithListSizeUnevenShouldReturn3() {
+    public void testFindMedianProducerConsumerTest_WithListSizeUneven_ShouldReturn3() {
         //Arrange
         System.out.println("FindMedianProducerConsumerTestWithListSizeEven");
 
@@ -116,7 +116,7 @@ public class FindMedianProducerConsumerTest {
      * FindMedianProducerConsumer.
      */
     @Test
-    public void testFindMedianProducerConsumerTestLastIndexShouldReturn3() {
+    public void testFindMedianProducerConsumerTest_LastIndex_ShouldReturn3() {
         //Arrange
         System.out.println("FindMedianProducerConsumerTestWithListSizeEven");
 

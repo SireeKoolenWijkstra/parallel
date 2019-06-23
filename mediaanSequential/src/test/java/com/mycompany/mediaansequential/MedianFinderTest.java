@@ -15,27 +15,27 @@ import org.junit.rules.ExpectedException;
 
 /**
  *
- * @author Siree
+ * @author Siree & Tamara
  */
 public class MedianFinderTest {
-    
-     /**
-     * Test of findrealMedian method, of class MedianFinder.Limit values are a list of null,
-     * list.size = 1, an even and an uneven list and the last index to check for index out 
+
+    /**
+     * Test of findRealMedian method, of class MedianFinder.Limit values are a list of null,
+     * list.size = 1, an even and an uneven list and the last index to check for index out
      * of bounds errors
      */
-          
-        MedianFinder medianFinder;
-        
-        @Rule
-        public ExpectedException thrown = ExpectedException.none();
+
+    private MedianFinder medianFinder;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
         System.out.println("MedianFinderTest: Before method setUp()");
         medianFinder = new MedianFinder();
     }
-    
+
     @After
     public void tearDown() {
         System.out.println("MedianFinderTest: After method tearDown()");
@@ -43,59 +43,58 @@ public class MedianFinderTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testFindrealMedianTestWithListNullShouldReturnNullPointerException() {
+    public void testFindRealMedianTest_WithListNull_ShouldReturnNullPointerException() {
         //Arrange
-        ArrayList<Integer> testWithNull = new ArrayList<>();
-        System.out.println("findrealMedianTestWithNull");
-        testWithNull = null;
-        
+        ArrayList<Integer> testWithNull = null;
+        System.out.println("findRealMedianTestWithNull");
+
         //Act
-        medianFinder.findrealMedian(testWithNull);
+        medianFinder.findRealMedian(testWithNull);
     }
-    
+
     /**
-     * Test of findrealMedian method, of class MedianFinder.
+     * Test of findRealMedian method, of class MedianFinder.
      */
     @Test
-    public void testFindrealMedianTestWithListSizeOneShouldReturn1() {
+    public void testFindRealMedianTest_WithListSizeOne_ShouldReturn1() {
         //Arrange
         ArrayList<Integer> testWithListSizeOne = new ArrayList<>();
-        System.out.println("findrealMedianTestWithListSizeOne");
+        System.out.println("findRealMedianTestWithListSizeOne");
         testWithListSizeOne.add(1);
         int expResult = 1;
         //Act
-        int result = medianFinder.findrealMedian(testWithListSizeOne);
+        int result = medianFinder.findRealMedian(testWithListSizeOne);
         //Assert
         assertEquals(expResult, result);
-        
+
     }
-    
-        @Test
-    public void testFindrealMedianTestWithListSizeEvenShouldReturn3() {
+
+    @Test
+    public void testFindRealMedianTest_WithListSizeEven_ShouldReturn3() {
         //Arrange
-        System.out.println("findrealMedianTestWithListSizeEven");
-        
+        System.out.println("findRealMedianTestWithListSizeEven");
+
         ArrayList<Integer> testWithListSizeEven = new ArrayList<>();
-        
+
         testWithListSizeEven.add(1);
         testWithListSizeEven.add(2);
         testWithListSizeEven.add(3);
         testWithListSizeEven.add(4);
         int expResult = 3;
         //Act
-        int result = medianFinder.findrealMedian(testWithListSizeEven);
+        int result = medianFinder.findRealMedian(testWithListSizeEven);
         //Assert
         assertEquals(expResult, result);
 
     }
-    
-         @Test
-    public void testFindrealMedianTestWithListSizeUnevenShouldReturn3() {
+
+    @Test
+    public void testFindRealMedianTest_WithListSizeUneven_ShouldReturn3() {
         //Arrange
-        System.out.println("findrealMedianTestWithListSizeEven");
-        
+        System.out.println("findRealMedianTestWithListSizeEven");
+
         ArrayList<Integer> testWithListSizeUneven = new ArrayList<>();
-        
+
         testWithListSizeUneven.add(1);
         testWithListSizeUneven.add(2);
         testWithListSizeUneven.add(3);
@@ -103,23 +102,23 @@ public class MedianFinderTest {
         testWithListSizeUneven.add(5);
         int expResult = 3;
         //Act
-        int result = medianFinder.findrealMedian(testWithListSizeUneven);
+        int result = medianFinder.findRealMedian(testWithListSizeUneven);
         //Assert
         assertEquals(expResult, result);
-        
+
     }
-    
-             @Test
-    public void testFindrealMedianTestLastIndexShouldReturn3() {
+
+    @Test
+    public void testFindRealMedianTest_LastIndex_ShouldReturn3() {
         //Arrange
-        System.out.println("findrealMedianTestWithListSizeEven");
-        
-        ArrayList<Integer> testLastIndex = new ArrayList<>(); 
-        
+        System.out.println("findRealMedianTestWithListSizeEven");
+
+        ArrayList<Integer> testLastIndex = new ArrayList<>();
+
         testLastIndex.add(1);
         testLastIndex.add(2);
         testLastIndex.add(3);
-        int targetIndex = testLastIndex.size()-1;
+        int targetIndex = testLastIndex.size() - 1;
 
         int expResult = 3;
         //Act

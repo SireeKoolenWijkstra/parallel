@@ -28,11 +28,12 @@ public class ReadCsv extends Thread {
     ArrayList<Integer> numberOfRecords;
     public ArrayList<ArrayList<Integer>> allNumberOfRecordsForAllDataSets = new ArrayList<>();
 
-    public ArrayList<ArrayList<Integer>> readFile() throws FileNotFoundException, IOException, InterruptedException {
+    public ArrayList<ArrayList<Integer>>  readFile() throws InterruptedException {
 
         long startTotal = System.currentTimeMillis();
 
         ArrayList<String[]> dataSet = new ArrayList<>();
+        Thread[] threadList = null;
 
         dataSet.add(new String[]{"..\\resources\\dataSet1\\winequality-red-part-1.csv",
             "..\\resources\\dataSet1\\winequality-red-part-2.csv",
@@ -90,7 +91,7 @@ public class ReadCsv extends Thread {
 
             executorService.shutdown();
             executorService.awaitTermination(1, TimeUnit.DAYS);
-            
+
             allNumberOfRecordsForAllDataSets.add(numberOfRecords);
             System.out.println("ReadFile, time: "
                     + (System.currentTimeMillis() - start) + " ms");
@@ -100,8 +101,8 @@ public class ReadCsv extends Thread {
             System.out.println("-------------------------------------------------------------------------\n");
         }
 
-        System.out.println("ReadFile for all dataSets, totall time: "
-                + (System.currentTimeMillis() - startTotal) + " ms\n");
+        System.out.println("ReadFile for all dataSets, total time: "
+                + (System.currentTimeMillis() - startTotal) + " ms");
 
         return allNumberOfRecordsForAllDataSets;
     }

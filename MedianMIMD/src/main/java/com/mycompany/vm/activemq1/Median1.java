@@ -32,6 +32,7 @@ public class Median1 {
 
     private static boolean firstRun = true;
     private static boolean active = true;
+    private static String format = "%-40s%s%n";
 
     /**
      * @param args the command line arguments
@@ -42,6 +43,8 @@ public class Median1 {
         ArrayList<Integer> list;
         ReadCsv csv = new ReadCsv();
         list = csv.readFile();
+
+        long startConnection = System.currentTimeMillis();
 
         //Setting up the connection to activeMQ.
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
@@ -63,6 +66,8 @@ public class Median1 {
         MessageProducer producer = session.createProducer(destination_toQueue);
         MessageProducer producer_toLengthList = session.createProducer(destination_toLengthListQueue);
         MessageConsumer consumer = session.createConsumer(destination_fromQueue);
+
+        System.out.printf(format, "Connection VM_1 set up in ", (System.currentTimeMillis() - startConnection) + " ms");
 
         // if it's the first run we need the producer to send the list length to manager
         // this is done before listening to other messages
