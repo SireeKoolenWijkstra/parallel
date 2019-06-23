@@ -70,6 +70,7 @@ public class ReadCsv {
                         + numberOfRecords.size());
                 System.out.println("ReadFile, time: "
                         + (System.currentTimeMillis() - startDataSet) + " ms");
+                System.out.println("-------------------------------------------------------------------------\n");
                 allNumberOfRecordsForAllDataSets.add(numberOfRecords);
             }
             System.out.println("ReadFile for all dataSets, totall time: "

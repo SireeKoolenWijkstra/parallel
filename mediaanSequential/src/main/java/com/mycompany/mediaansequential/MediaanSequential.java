@@ -40,6 +40,7 @@ public class MediaanSequential {
                 + " is " + medianFinder.findrealMedian(dataSet.get(i)));
         System.out.println("Median found in time: "
                 + (System.currentTimeMillis() - start) + " ms");
+        System.out.println("-------------------------------------------------------------------------\n");
             
         }
         

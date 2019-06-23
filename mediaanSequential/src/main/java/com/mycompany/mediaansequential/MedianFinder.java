@@ -24,28 +24,24 @@ public class MedianFinder {
         ArrayList<Integer> equalsToPivot = new ArrayList<>();
 
         int pivot = findPivot(list);
-//        int countRandom = 0;
-//        // Code so that finding the median will take time
-//        Random random = new Random();
-//        int k = ((random.nextInt(80)) + 1) * 15000000;
-//
-//        //Act
-//        for (int i = 0; i < k; i++) {
-//            countRandom++;
-//        }
+
 
         for (int i = 0; i < list.size(); i++) {
             
-
             int countRandom = 0;
             // Code so that finding the median will take time
             Random random = new Random();
-            int k = ((random.nextInt(80)) + 1) * 15000000;
+            int k = ((random.nextInt(5)) + 1) * 1000/4;
 
             //Act
             for (int j = 0; j < k; j++) {
-                countRandom++;
+                countRandom = (countRandom + 1) & 7;
+
             }
+            if (countRandom > 10) {
+                System.out.println("Nonsens om de busy-loop ook echt iets te laten doen");
+            }
+                
 
             if (list.get(i) < list.get(pivot)) {
                 smallerThanPivot.add(list.get(i));

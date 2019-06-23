@@ -45,16 +45,22 @@ class MedianFinderSynchronised extends Thread {
                 ArrayList<Integer> localBiggerThanPivot = new ArrayList<>();
                 ArrayList<Integer> localEqualsToPivot = new ArrayList<>();
 
-                int countRandom = 0;
-                // Code so that finding the median will take time
-                Random random = new Random();
-                int k = ((random.nextInt(80)) + 1) * 15000000;
-
-                for (int i1 = 0; i1 < k; i1++) {
-                    countRandom++;
-                }
-
                 for (int j = 0; j < subList.size(); j++) {
+
+                    int countRandom = 0;
+                    // Code so that finding the median will take time
+                    Random random = new Random();
+                    int k = ((random.nextInt(5)) + 1) * 1000 / 4;
+
+                    //Act
+                    for (int m = 0; m < k; m++) {
+                        countRandom = (countRandom + 1) & 7;
+
+                    }
+                    if (countRandom > 10) {
+                        System.out.println("Nonsens om de busy-loop ook echt iets te laten doen");
+                    }
+
                     int value = subList.get(j);
                     if (value < pivotValue) {
                         localSmallerThanPivot.add(value);
