@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template inDataSet1 the editor.
  */
-package com.mycompany.mediaansequential;
+package com.mycompany.mediansequential;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -75,7 +75,6 @@ class ReadCsv {
             }
             System.out.printf(format, "RecordNr of data set: ", numberOfRecords.size());
             System.out.printf(format, "ReadFile, time: ", (System.currentTimeMillis() - startDataSet) + " ms");
-            System.out.println("ReadFile for all dataSets, total time: " + (System.currentTimeMillis() - start) + " ms");
 
             return numberOfRecords;
         } catch (NumberFormatException e) {
