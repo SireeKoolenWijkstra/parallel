@@ -16,9 +16,12 @@ import java.util.concurrent.TimeUnit;
  * @author Siree & Tamara
  */
 class MedianFinderSynchronised extends Thread {
-    private int recursiveCount;
+    private int recursiveCount = 0;
+    private int threadCount;
+    private final int MAX_THREADS = 8;
 
     int findMedian(ArrayList<Integer> list, int targetIndex) throws InterruptedException {
+        threadCount = 0;
         recursiveCount++;
         ArrayList<Integer> smallerThanPivot = new ArrayList<>();
         ArrayList<Integer> biggerThanPivot = new ArrayList<>();
@@ -27,7 +30,6 @@ class MedianFinderSynchronised extends Thread {
         int pivot = findPivot(list);
         int pivotValue = list.get(pivot);
 
-        final int MAX_THREADS = 8;
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREADS);
 
         //
@@ -37,7 +39,9 @@ class MedianFinderSynchronised extends Thread {
                     list.size() * (i + 1) / MAX_THREADS);
 
             executorService.submit(() -> {
-
+                synchronized (MedianFinderSynchronised.this) {
+                    threadCount++;
+                }
                 ArrayList<Integer> localSmallerThanPivot = new ArrayList<>();
                 ArrayList<Integer> localBiggerThanPivot = new ArrayList<>();
                 ArrayList<Integer> localEqualsToPivot = new ArrayList<>();
@@ -89,6 +93,7 @@ class MedianFinderSynchronised extends Thread {
         }
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.DAYS);
+        System.out.printf("%-30s%s%n", "ExecutorService had threads: ", threadCount);
 
         if (smallerThanPivot.size() > targetIndex) {
             return findMedian(smallerThanPivot, targetIndex);

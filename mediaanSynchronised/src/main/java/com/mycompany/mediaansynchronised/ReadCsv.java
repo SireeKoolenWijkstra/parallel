@@ -21,6 +21,7 @@ class ReadCsv extends Thread {
 
     private static final ArrayList<Integer> numberOfRecords = new ArrayList<>();
     private String format = "%-30s%s%n";
+    private final int MAX_THREADS = 8;
 
     ArrayList<Integer> readFile() {
 
@@ -62,7 +63,6 @@ class ReadCsv extends Thread {
 
 
         long startDataSet = System.currentTimeMillis();
-        final int MAX_THREADS = 8;
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREADS);
 
         for (int i = 0; i < fileNames.size(); i++) {
