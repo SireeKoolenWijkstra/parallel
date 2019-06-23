@@ -10,6 +10,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
@@ -25,12 +28,11 @@ public class ReadCsv extends Thread {
     ArrayList<Integer> numberOfRecords;
     public ArrayList<ArrayList<Integer>> allNumberOfRecordsForAllDataSets = new ArrayList<>();
 
-    public ArrayList<ArrayList<Integer>>  readFile() throws FileNotFoundException, IOException, InterruptedException {
+    public ArrayList<ArrayList<Integer>> readFile() throws FileNotFoundException, IOException, InterruptedException {
 
         long startTotal = System.currentTimeMillis();
 
         ArrayList<String[]> dataSet = new ArrayList<>();
-        Thread[] threadList = null;
 
         dataSet.add(new String[]{"..\\resources\\dataSet1\\winequality-red-part-1.csv",
             "..\\resources\\dataSet1\\winequality-red-part-2.csv",
@@ -63,15 +65,19 @@ public class ReadCsv extends Thread {
             "..\\resources\\dataSet3\\winequality-white-part-2.2.csv",
             "..\\resources\\dataSet3\\winequality-white-part-2.3.csv"});
 
-       for (int i = 0; i < dataSet.size(); i++) {
+        for (int i = 0; i < dataSet.size(); i++) {
             long start = System.currentTimeMillis();
             numberOfRecords = new ArrayList<>();
 
             String[] fileNames = dataSet.get(i);
-            threadList = new Thread[fileNames.length];
+
+            final int MAX_THREADS = 8;
+
+            ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREADS);
+
             for (int k = 0; k < fileNames.length; k++) {
                 final int l = k;
-                Thread t = new Thread(() -> {
+                executorService.submit(() -> {
                     try {
                         parseFile(fileNames[l]);
 
@@ -80,28 +86,26 @@ public class ReadCsv extends Thread {
                         throw new Error(e);
                     }
                 });
-
-                System.out.println("starting thread " + t);
-                t.start();
-                threadList[k] = t;
             }
 
-            for (Thread threadList1 : threadList) {
-                threadList1.join();
-            }
+            executorService.shutdown();
+            executorService.awaitTermination(1, TimeUnit.DAYS);
+            
             allNumberOfRecordsForAllDataSets.add(numberOfRecords);
             System.out.println("ReadFile, time: "
                     + (System.currentTimeMillis() - start) + " ms");
-            System.out.println("Number of threads started: " + threadList.length);
+            System.out.println("Number of threads started: " + MAX_THREADS);
             System.out.println("Recordnr of dataSet " + (i + 1) + ": "
                     + numberOfRecords.size());
+            System.out.println("-------------------------------------------------------------------------\n");
         }
 
         System.out.println("ReadFile for all dataSets, totall time: "
-                + (System.currentTimeMillis() - startTotal) + " ms");
+                + (System.currentTimeMillis() - startTotal) + " ms\n");
 
         return allNumberOfRecordsForAllDataSets;
     }
+
     public void parseFile(String fileName) throws IOException {
 
         BufferedReader inDataSet = new BufferedReader(new FileReader(fileName));

@@ -31,13 +31,13 @@ public class FindMedianProducerConsumer {
 
         final int MAX_WORKERS = 8;
 
-        ExecutorService executorService = Executors.newCachedThreadPool();
+        ExecutorService executorService = Executors.newFixedThreadPool(MAX_WORKERS);
 
         for (int i = 0; i < MAX_WORKERS; i++) {
             int id = i + 1;
-            Divider consumer = new Divider(dataHandler, id, pivotValue);
+            Divider divider = new Divider(dataHandler, id, pivotValue);
 
-            executorService.submit(consumer);
+            executorService.submit(divider);
         }
 
         executorService.shutdown();
@@ -60,10 +60,10 @@ public class FindMedianProducerConsumer {
         int countRandom = 0;
         // Code so that finding the median will take time
         Random random = new Random();
-        int j = ((random.nextInt(50)) + 1) * 1000000;
+        int k = ((random.nextInt(80)) + 1) * 15000000;
 
         //Act
-        for (int i = 0; i < j; i++) {
+        for (int i = 0; i < k; i++) {
             countRandom++;
         }
 

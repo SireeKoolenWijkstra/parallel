@@ -36,11 +36,12 @@ public class MedianSynchronised {
                     + (i + 1)
                     + " is "
                     + medianFinder.findRealMedian(dataSet.get(i)));
-
             System.out.println("Median found in time: " + (System.currentTimeMillis() - start) + " ms");
-            System.out.println("Available processors: "
-                    + Runtime.getRuntime().availableProcessors());
+            System.out.println("-------------------------------------------------------------------------");
+
         }
+        System.out.println("Available processors: "
+                + Runtime.getRuntime().availableProcessors());
 
         // Get the Java runtime
         Runtime runtime = Runtime.getRuntime();
