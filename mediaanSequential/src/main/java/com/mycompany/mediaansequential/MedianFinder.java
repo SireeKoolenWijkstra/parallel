@@ -14,31 +14,21 @@ import java.util.concurrent.ThreadLocalRandom;
  * Finds the median of a list without sorting Ignores part of list that doesn't
  * contain the median value
  *
- * @author Siree
+ * @author Siree & Tamara
  */
-public class MedianFinder {
+class MedianFinder {
 
-    public int findMedian(ArrayList<Integer> list, int targetIndex) {
+    int findMedian(ArrayList<Integer> list, int targetIndex) {
         ArrayList<Integer> smallerThanPivot = new ArrayList<>();
         ArrayList<Integer> biggerThanPivot = new ArrayList<>();
         ArrayList<Integer> equalsToPivot = new ArrayList<>();
 
         int pivot = findPivot(list);
-//        int countRandom = 0;
-//        // Code so that finding the median will take time
-//        Random random = new Random();
-//        int k = ((random.nextInt(80)) + 1) * 15000000;
-//
-//        //Act
-//        for (int i = 0; i < k; i++) {
-//            countRandom++;
-//        }
 
         for (int i = 0; i < list.size(); i++) {
-            
 
-            int countRandom = 0;
             // Code so that finding the median will take time
+            int countRandom = 0;
             Random random = new Random();
             int k = ((random.nextInt(80)) + 1) * 15000000;
 
@@ -47,6 +37,7 @@ public class MedianFinder {
                 countRandom++;
             }
 
+            //Dividing over different lists based on Pivot
             if (list.get(i) < list.get(pivot)) {
                 smallerThanPivot.add(list.get(i));
             } else if (Objects.equals(list.get(i), list.get(pivot))) {
@@ -67,12 +58,12 @@ public class MedianFinder {
 
     }
 
-    public int findrealMedian(ArrayList<Integer> list) {
+    int findRealMedian(ArrayList<Integer> list) {
         int targetIndex = divideArrayList(list);
         return findMedian(list, targetIndex);
     }
 
-    public int divideArrayList(ArrayList<Integer> list) {
+    private int divideArrayList(ArrayList<Integer> list) {
         if (list.size() % 2 == 1) {
             return (list.size() - 1) / 2;
         } else {
@@ -80,7 +71,7 @@ public class MedianFinder {
         }
     }
 
-    public int findPivot(ArrayList<Integer> list) {
+    private int findPivot(ArrayList<Integer> list) {
         return ThreadLocalRandom.current().nextInt(0, list.size());
     }
 
