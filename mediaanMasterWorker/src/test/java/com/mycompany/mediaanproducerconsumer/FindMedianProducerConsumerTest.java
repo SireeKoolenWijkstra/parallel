@@ -5,6 +5,7 @@
  */
 package com.mycompany.mediaanproducerconsumer;
 
+import com.mycompany.mediaanmasterworker.FindMedianMaster;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
@@ -17,12 +18,12 @@ import static org.junit.Assert.*;
  */
 public class FindMedianProducerConsumerTest {
 
-    FindMedianProducerConsumer findMedianProducerConsumer;
+    FindMedianMaster findMedianProducerConsumer;
 
     @Before
     public void setUp() throws Exception {
         System.out.println("FindMedianProducerConsumerTest: Before method setUp()");
-        findMedianProducerConsumer = new FindMedianProducerConsumer();
+        findMedianProducerConsumer = new FindMedianMaster();
     }
 
     @After
@@ -32,8 +33,8 @@ public class FindMedianProducerConsumerTest {
     }
 
     /**
-     * Test of FindMedianProducerConsumer method, of class
-     * FindMedianProducerConsumer.
+     * Test of FindMedianMaster method, of class
+ FindMedianMaster.
      */
     @Test(expected = NullPointerException.class)
     public void testFindMedianProducerConsumerTest_WithListNull_ShouldReturnNullPointerException() {
@@ -43,12 +44,12 @@ public class FindMedianProducerConsumerTest {
         testWithNull = null;
 
         //Act
-        findMedianProducerConsumer.findMedianProducerConsumer(testWithNull);
+        findMedianProducerConsumer.findMedianMasterWorker(testWithNull);
     }
 
     /**
-     * Test of FindMedianProducerConsumer method, of class
-     * FindMedianProducerConsumer.
+     * Test of FindMedianMaster method, of class
+ FindMedianMaster.
      */
     @Test
     public void testFindMedianProducerConsumerTest_WithListSizeOne_ShouldReturn1() {
@@ -58,15 +59,15 @@ public class FindMedianProducerConsumerTest {
         testWithListSizeOne.add(1);
         int expResult = 1;
         //Act
-        int result = findMedianProducerConsumer.findMedianProducerConsumer(testWithListSizeOne);
+        int result = findMedianProducerConsumer.findMedianMasterWorker(testWithListSizeOne);
         //Assert
         assertEquals(expResult, result);
 
     }
 
     /**
-     * Test of FindMedianProducerConsumer method, of class
-     * FindMedianProducerConsumer.
+     * Test of FindMedianMaster method, of class
+ FindMedianMaster.
      */
     @Test
     public void testFindMedianProducerConsumerTest_WithListSizeEven_ShouldReturn3() {
@@ -81,15 +82,15 @@ public class FindMedianProducerConsumerTest {
         testWithListSizeEven.add(4);
         int expResult = 3;
         //Act
-        int result = findMedianProducerConsumer.findMedianProducerConsumer(testWithListSizeEven);
+        int result = findMedianProducerConsumer.findMedianMasterWorker(testWithListSizeEven);
         //Assert
         assertEquals(expResult, result);
 
     }
 
     /**
-     * Test of FindMedianProducerConsumer method, of class
-     * FindMedianProducerConsumer.
+     * Test of FindMedianMaster method, of class
+ FindMedianMaster.
      */
     @Test
     public void testFindMedianProducerConsumerTest_WithListSizeUneven_ShouldReturn3() {
@@ -105,15 +106,15 @@ public class FindMedianProducerConsumerTest {
         testWithListSizeUneven.add(5);
         int expResult = 3;
         //Act
-        int result = findMedianProducerConsumer.findMedianProducerConsumer(testWithListSizeUneven);
+        int result = findMedianProducerConsumer.findMedianMasterWorker(testWithListSizeUneven);
         //Assert
         assertEquals(expResult, result);
 
     }
 
     /**
-     * Test of FindMedianProducerConsumer method, of class
-     * FindMedianProducerConsumer.
+     * Test of FindMedianMaster method, of class
+ FindMedianMaster.
      */
     @Test
     public void testFindMedianProducerConsumerTest_LastIndex_ShouldReturn3() {

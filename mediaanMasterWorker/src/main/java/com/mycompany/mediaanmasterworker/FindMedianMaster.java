@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.mediaanproducerconsumer;
+package com.mycompany.mediaanmasterworker;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,15 +18,15 @@ import java.util.logging.Logger;
  *
  * @author Siree
  */
-public class FindMedianProducerConsumer {
+public class FindMedianMaster {
 
-    public int findMedianProducerConsumer(ArrayList<Integer> list) {
+    public int findMedianMasterWorker(ArrayList<Integer> list) {
         int targetIndex = divideArrayList(list);
         return compareArraysToTargetIndex(list, targetIndex);
 
     }
 
-    public void SingleProducerSingleConsumer(DataHandler dataHandler,
+    public void dividerWorkerStarter(DataHandler dataHandler,
             int pivotValue) throws InterruptedException {
 
         final int MAX_WORKERS = 8;
@@ -35,7 +35,7 @@ public class FindMedianProducerConsumer {
 
         for (int i = 0; i < MAX_WORKERS; i++) {
             int id = i + 1;
-            Divider divider = new Divider(dataHandler, id, pivotValue);
+            DividerWorker divider = new DividerWorker(dataHandler, id, pivotValue);
 
             executorService.submit(divider);
         }
@@ -51,9 +51,9 @@ public class FindMedianProducerConsumer {
         DataHandler dataHandler = new DataHandler(list);
 
         try {
-            SingleProducerSingleConsumer(dataHandler, pivotValue);
+            dividerWorkerStarter(dataHandler, pivotValue);
         } catch (InterruptedException ex) {
-            Logger.getLogger(FindMedianProducerConsumer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FindMedianMaster.class.getName()).log(Level.SEVERE, null, ex);
             throw new Error(ex);
         }
 

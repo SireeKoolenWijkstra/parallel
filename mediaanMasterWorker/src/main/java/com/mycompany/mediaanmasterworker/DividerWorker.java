@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.mediaanproducerconsumer;
+package com.mycompany.mediaanmasterworker;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -13,14 +13,14 @@ import java.util.Random;
  *
  * @author Siree
  */
-public class Divider extends Thread {
+public class DividerWorker extends Thread {
 
     final DataHandler dataHandler;
     private final int id;
     //private int jobsProcessed;
     private final int pivotValue;
 
-    Divider(DataHandler dataHandler, int id, int pivotValue) {
+    DividerWorker(DataHandler dataHandler, int id, int pivotValue) {
         this.dataHandler = dataHandler;
         this.id = id;
         this.pivotValue = pivotValue;
@@ -74,6 +74,6 @@ public class Divider extends Thread {
                 throw e;
             }
         }
-        //System.out.println("Divider " + id + " processed " + jobsProcessed);
+        //System.out.println("DividerWorker " + id + " processed " + jobsProcessed);
     }
 }
