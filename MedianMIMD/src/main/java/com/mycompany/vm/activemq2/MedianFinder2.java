@@ -50,6 +50,7 @@ public class MedianFinder2 {
             countRandom++;
         }
 
+        assert list != null;
         for (int i = 0; i < list.size(); i++) {
             int value = list.get(i);
             if (value < pivotValue) {

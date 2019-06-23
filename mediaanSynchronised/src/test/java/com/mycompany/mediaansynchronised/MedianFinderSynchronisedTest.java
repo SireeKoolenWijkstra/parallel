@@ -35,7 +35,7 @@ public class MedianFinderSynchronisedTest {
      * Test of findRealMedian method, of class MedianFinderSynchronised.
      */
     @Test(expected = NullPointerException.class)
-    public void testFindrealMedianSynchronisedTestWithListNullShouldReturnNullPointerException() throws InterruptedException {
+    public void testFindrealMedianSynchronisedTest_WithListNull_ShouldReturnNullPointerException() throws InterruptedException {
         //Arrange
         ArrayList<Integer> testWithNull = new ArrayList<>();
         System.out.println("findrealMedianSynchronisedTestWithListNull");
@@ -49,7 +49,7 @@ public class MedianFinderSynchronisedTest {
      * Test of findRealMedian method, of class MedianFinder.
      */
     @Test
-    public void testFindrealMedianSynchronisedTestWithListSizeOneShouldReturn1() throws InterruptedException {
+    public void testFindrealMedianSynchronisedTest_WithListSizeOne_ShouldReturn1() throws InterruptedException {
         //Arrange
         ArrayList<Integer> testWithListSizeOne = new ArrayList<>();
         System.out.println("findrealMedianSynchronisedTestWithListSizeOne");
@@ -63,7 +63,7 @@ public class MedianFinderSynchronisedTest {
     }
 
     @Test
-    public void testFindrealMedianSynchronisedTestWithListSizeEvenShouldReturn3() throws InterruptedException {
+    public void testFindrealMedianSynchronisedTest_WithListSizeEven_ShouldReturn3() throws InterruptedException {
         //Arrange
         System.out.println("findrealMedianSynchornisedTestWithListSizeEven");
 
@@ -82,7 +82,7 @@ public class MedianFinderSynchronisedTest {
     }
 
     @Test
-    public void testFindrealMedianTestWithListSizeUnevenShouldReturn3() throws InterruptedException {
+    public void testFindrealMedianTest_WithListSizeUneven_ShouldReturn3() throws InterruptedException {
         //Arrange
         System.out.println("findrealMedianSynchronisedTestWithListSizeEven");
 
@@ -102,7 +102,7 @@ public class MedianFinderSynchronisedTest {
     }
 
     @Test
-    public void testFindrealMedianTestLastIndexShouldReturn3() throws InterruptedException {
+    public void testFindrealMedianTest_LastIndex_ShouldReturn3() throws InterruptedException {
         //Arrange
         System.out.println("findrealMedianSynchronisedTestWithListSizeEven");
 
