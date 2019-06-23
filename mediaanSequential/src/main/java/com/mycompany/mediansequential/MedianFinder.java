@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.mediaansequential;
+package com.mycompany.mediansequential;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -17,8 +17,10 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Siree & Tamara
  */
 class MedianFinder {
+    private int recursiveCount;
 
     int findMedian(ArrayList<Integer> list, int targetIndex) {
+        recursiveCount++;
         ArrayList<Integer> smallerThanPivot = new ArrayList<>();
         ArrayList<Integer> biggerThanPivot = new ArrayList<>();
         ArrayList<Integer> equalsToPivot = new ArrayList<>();
@@ -52,19 +54,19 @@ class MedianFinder {
             }
         }
 
-        if (smallerThanPivot.size()
-                > targetIndex) {
+        if (smallerThanPivot.size() > targetIndex) {
             return findMedian(smallerThanPivot, targetIndex);
         } else if ((smallerThanPivot.size() + equalsToPivot.size()) > targetIndex) {
+            System.out.printf("%-30s%s%n", "Median found in ", recursiveCount + " cycles");
             return list.get(pivot);
         } else {
             return findMedian(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size());
         }
-
     }
 
     int findRealMedian(ArrayList<Integer> list) {
         int targetIndex = divideArrayList(list);
+        recursiveCount = 0;
         return findMedian(list, targetIndex);
     }
 
