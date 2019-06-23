@@ -1,21 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.mediaansynchronised;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  *
- * @author Siree
+ * @author Siree & Tamara
  */
 public class MedianSynchronised {
 
     private static final long MEGABYTE = 1024L * 1024L;
-    private static String format = "%-30s%s%n";
 
     private static long bytesToMegabytes(long bytes) {
         return bytes / MEGABYTE;
@@ -24,7 +17,7 @@ public class MedianSynchronised {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         long totalRuntime = System.currentTimeMillis();
 
         ReadCsv readCsv = new ReadCsv();
@@ -35,6 +28,7 @@ public class MedianSynchronised {
         ArrayList<Integer> dataSet = readCsv.readFile();
         long start = System.currentTimeMillis();
 
+        String format = "%-30s%s%n";
         System.out.println("--------------------------------");
         System.out.printf(format, "Median of data set is ", medianFinder.findRealMedian(dataSet));
         System.out.printf(format, "Median found in time: ", (System.currentTimeMillis() - start) + " ms");

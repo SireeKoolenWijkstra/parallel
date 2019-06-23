@@ -40,7 +40,7 @@ class MedianFinder {
 
             }
             if (countRandom > 10) {
-                System.out.println("Nonsens om de busy-loop ook echt iets te laten doen");
+                System.out.println("countRandom was skipped in run because it was never used");
             }
                 
 

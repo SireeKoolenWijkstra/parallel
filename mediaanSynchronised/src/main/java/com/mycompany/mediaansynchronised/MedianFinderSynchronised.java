@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.mediaansynchronised;
 
 import java.util.ArrayList;
@@ -60,7 +55,7 @@ class MedianFinderSynchronised extends Thread {
 
                     }
                     if (countRandom > 10) {
-                        System.out.println("Nonsens om de busy-loop ook echt iets te laten doen");
+                        System.out.println("countRandom was skipped in run because it was never used");
                     }
 
                     int value = subList.get(j);
