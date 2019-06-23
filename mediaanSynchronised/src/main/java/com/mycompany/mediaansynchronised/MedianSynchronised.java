@@ -1,47 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.mediaansynchronised;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  *
- * @author Siree
+ * @author Siree & Tamara
  */
 public class MedianSynchronised {
 
     private static final long MEGABYTE = 1024L * 1024L;
-    private static String format = "%-40s%s%n";
 
-    public static long bytesToMegabytes(long bytes) {
+    private static long bytesToMegabytes(long bytes) {
         return bytes / MEGABYTE;
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
+        long totalRuntime = System.currentTimeMillis();
 
         ReadCsv readCsv = new ReadCsv();
         MedianFinderSynchronised medianFinder = new MedianFinderSynchronised();
 
-        ArrayList<ArrayList<Integer>> dataSet = readCsv.readFile();
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < dataSet.size(); i++) {
-            System.out.println("Median of dataset "
-                    + (i + 1)
-                    + " is "
-                    + medianFinder.findRealMedian(dataSet.get(i)));
-            System.out.println("Median found in time: " + (System.currentTimeMillis() - start) + " ms");
-            System.out.println("-------------------------------------------------------------------------");
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
-        }
-        System.out.println("Available processors: "
-                + Runtime.getRuntime().availableProcessors());
+        ArrayList<Integer> dataSet = readCsv.readFile();
+        long start = System.currentTimeMillis();
+
+        String format = "%-30s%s%n";
+        System.out.println("--------------------------------");
+        System.out.printf(format, "Median of data set is ", medianFinder.findRealMedian(dataSet));
+        System.out.printf(format, "Median found in time: ", (System.currentTimeMillis() - start) + " ms");
+        System.out.println("--------------------------------");
+        System.out.printf(format, "Total Runtime: ", (System.currentTimeMillis() - totalRuntime) + " ms");
+        System.out.println("--------------------------------");
+        System.out.printf(format, "Available processors: ", Runtime.getRuntime().availableProcessors());
 
         // Get the Java runtime
         Runtime runtime = Runtime.getRuntime();
@@ -51,8 +45,6 @@ public class MedianSynchronised {
         // Calculate the used memory
         long memory = runtime.totalMemory() - runtime.freeMemory();
         System.out.printf(format, "Used memory is bytes: ", memory);
-        System.out.printf(format, "Used memory is megabytes: ",
-                bytesToMegabytes(memory));
-
+        System.out.printf(format, "Used memory is megabytes: ", bytesToMegabytes(memory));
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.mediaansynchronised;
 
 import java.util.ArrayList;
@@ -18,19 +13,21 @@ import java.util.concurrent.TimeUnit;
  * Finds the median of a list without sorting Ignores part of list that doesn't
  * contain the median value
  *
- * @author Siree
+ * @author Siree & Tamara
  */
 class MedianFinderSynchronised extends Thread {
+    private int recursiveCount;
 
-    public int findMedian(ArrayList<Integer> list, int targetIndex) throws InterruptedException {
+    int findMedian(ArrayList<Integer> list, int targetIndex) throws InterruptedException {
+        recursiveCount++;
         ArrayList<Integer> smallerThanPivot = new ArrayList<>();
         ArrayList<Integer> biggerThanPivot = new ArrayList<>();
         ArrayList<Integer> equalsToPivot = new ArrayList<>();
-        final int MAX_THREADS = 8;
 
         int pivot = findPivot(list);
         int pivotValue = list.get(pivot);
 
+        final int MAX_THREADS = 8;
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREADS);
 
         //
@@ -58,7 +55,7 @@ class MedianFinderSynchronised extends Thread {
 
                     }
                     if (countRandom > 10) {
-                        System.out.println("Nonsens om de busy-loop ook echt iets te laten doen");
+                        System.out.println("countRandom was skipped in run because it was never used");
                     }
 
                     int value = subList.get(j);
@@ -89,15 +86,14 @@ class MedianFinderSynchronised extends Thread {
                     }
                 }
             });
-        };
+        }
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.DAYS);
 
-        if (smallerThanPivot.size()
-                > targetIndex) {
+        if (smallerThanPivot.size() > targetIndex) {
             return findMedian(smallerThanPivot, targetIndex);
-        } else if ((smallerThanPivot.size()
-                + equalsToPivot.size()) > targetIndex) {
+        } else if ((smallerThanPivot.size() + equalsToPivot.size()) > targetIndex) {
+            System.out.printf("%-30s%s%n", "Median found in ", recursiveCount + " cycles");
             return pivotValue;
         } else {
             return findMedian(biggerThanPivot, targetIndex - smallerThanPivot.size() - equalsToPivot.size());
@@ -106,7 +102,6 @@ class MedianFinderSynchronised extends Thread {
     }
 
     int findRealMedian(ArrayList<Integer> list) throws InterruptedException {
-
         int targetIndex = divideArrayList(list);
         return findMedian(list, targetIndex);
     }

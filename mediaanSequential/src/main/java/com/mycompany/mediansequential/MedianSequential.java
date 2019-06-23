@@ -34,17 +34,13 @@ public class MedianSequential {
 
         ArrayList<Integer> dataSet = readCsv.readFile();
         long start = System.currentTimeMillis();
-//        for (int i = 0; i < dataSet.size(); i++) {
-            System.out.println("--------------------------------");
-            System.out.printf(format, "Median of data set is ", medianFinder.findRealMedian(dataSet));
-            System.out.printf(format, "Median found in time: ",  (System.currentTimeMillis() - start) + " ms");
-            System.out.println("--------------------------------");
-//        }
 
-
-        System.out.printf(format, "Total Runtime: ",  (System.currentTimeMillis() - totalRuntime) + " ms");
         System.out.println("--------------------------------");
-
+        System.out.printf(format, "Median of data set is ", medianFinder.findRealMedian(dataSet));
+        System.out.printf(format, "Median found in time: ", (System.currentTimeMillis() - start) + " ms");
+        System.out.println("--------------------------------");
+        System.out.printf(format, "Total Runtime: ", (System.currentTimeMillis() - totalRuntime) + " ms");
+        System.out.println("--------------------------------");
         System.out.printf(format, "Available processors: ", Runtime.getRuntime().availableProcessors());
 
         // Get the Java runtime

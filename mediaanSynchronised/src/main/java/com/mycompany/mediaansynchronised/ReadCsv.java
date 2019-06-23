@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.mediaansynchronised;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,93 +15,84 @@ import org.apache.commons.csv.CSVRecord;
  * and for each record in the array it looks for the header "quality" and puts
  * the value of that record in variable "quality"
  *
- * @author Siree
+ * @author Siree & Tamara
  */
-public class ReadCsv extends Thread {
+class ReadCsv extends Thread {
 
-    ArrayList<Integer> numberOfRecords;
-    public ArrayList<ArrayList<Integer>> allNumberOfRecordsForAllDataSets = new ArrayList<>();
+    private static final ArrayList<Integer> numberOfRecords = new ArrayList<>();
+    private String format = "%-30s%s%n";
 
-    public ArrayList<ArrayList<Integer>>  readFile() throws InterruptedException {
+    ArrayList<Integer> readFile() {
 
-        long startTotal = System.currentTimeMillis();
+        ArrayList<String> fileNames = new ArrayList<>();
 
-        ArrayList<String[]> dataSet = new ArrayList<>();
-        Thread[] threadList = null;
+        // dataSet 1n
+        fileNames.add("..\\resources\\dataSet1\\winequality-red-part-1.csv");
+        fileNames.add("..\\resources\\dataSet1\\winequality-red-part-2.csv");
+        fileNames.add("..\\resources\\dataSet1\\winequality-white-part-1.csv");
+        fileNames.add("..\\resources\\dataSet1\\winequality-white-part-2.csv");
 
-        dataSet.add(new String[]{"..\\resources\\dataSet1\\winequality-red-part-1.csv",
-            "..\\resources\\dataSet1\\winequality-red-part-2.csv",
-            "..\\resources\\dataSet1\\winequality-white-part-1.csv",
-            "..\\resources\\dataSet1\\winequality-white-part-2.csv"});
+        // dataSet 2n
+//        fileNames.add("..\\resources\\dataSet2\\winequality-red-part-1.csv");
+//        fileNames.add("..\\resources\\dataSet2\\winequality-red-part-1.1.csv");
+//        fileNames.add("..\\resources\\dataSet2\\winequality-red-part-2.csv");
+//        fileNames.add("..\\resources\\dataSet2\\winequality-red-part-2.1.csv");
+//        fileNames.add("..\\resources\\dataSet2\\winequality-white-part-1.csv");
+//        fileNames.add("..\\resources\\dataSet2\\winequality-white-part-1.1.csv");
+//        fileNames.add("..\\resources\\dataSet2\\winequality-white-part-2.csv");
+//        fileNames.add("..\\resources\\dataSet2\\winequality-white-part-2.1.csv");
 
-        dataSet.add(new String[]{"..\\resources\\dataSet2\\winequality-red-part-1.csv",
-            "..\\resources\\dataSet2\\winequality-red-part-1.1.csv",
-            "..\\resources\\dataSet2\\winequality-red-part-2.csv",
-            "..\\resources\\dataSet2\\winequality-red-part-2.1.csv",
-            "..\\resources\\dataSet2\\winequality-white-part-1.csv",
-            "..\\resources\\dataSet2\\winequality-white-part-1.1.csv",
-            "..\\resources\\dataSet2\\winequality-white-part-2.csv",
-            "..\\resources\\dataSet2\\winequality-white-part-2.1.csv"});
+        // dataSet 4n
+//        fileNames.add("..\\resources\\dataSet3\\winequality-red-part-1.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-red-part-1.1.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-red-part-1.2.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-red-part-1.3.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-red-part-2.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-red-part-2.1.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-red-part-2.2.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-red-part-2.3.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-white-part-1.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-white-part-1.1.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-white-part-1.2.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-white-part-1.3.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-white-part-2.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-white-part-2.1.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-white-part-2.2.csv");
+//        fileNames.add("..\\resources\\dataSet3\\winequality-white-part-2.3.csv");
 
-        dataSet.add(new String[]{"..\\resources\\dataSet3\\winequality-red-part-1.csv",
-            "..\\resources\\dataSet3\\winequality-red-part-1.1.csv",
-            "..\\resources\\dataSet3\\winequality-red-part-1.2.csv",
-            "..\\resources\\dataSet3\\winequality-red-part-1.3.csv",
-            "..\\resources\\dataSet3\\winequality-red-part-2.csv",
-            "..\\resources\\dataSet3\\winequality-red-part-2.1.csv",
-            "..\\resources\\dataSet3\\winequality-red-part-2.2.csv",
-            "..\\resources\\dataSet3\\winequality-red-part-2.3.csv",
-            "..\\resources\\dataSet3\\winequality-white-part-1.csv",
-            "..\\resources\\dataSet3\\winequality-white-part-1.1.csv",
-            "..\\resources\\dataSet3\\winequality-white-part-1.2.csv",
-            "..\\resources\\dataSet3\\winequality-white-part-1.3.csv",
-            "..\\resources\\dataSet3\\winequality-white-part-2.csv",
-            "..\\resources\\dataSet3\\winequality-white-part-2.1.csv",
-            "..\\resources\\dataSet3\\winequality-white-part-2.2.csv",
-            "..\\resources\\dataSet3\\winequality-white-part-2.3.csv"});
 
-        for (int i = 0; i < dataSet.size(); i++) {
-            long start = System.currentTimeMillis();
-            numberOfRecords = new ArrayList<>();
+        long startDataSet = System.currentTimeMillis();
+        final int MAX_THREADS = 8;
+        ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREADS);
 
-            String[] fileNames = dataSet.get(i);
+        for (int i = 0; i < fileNames.size(); i++) {
+            final int j = i;
+            executorService.submit(() -> {
+                try {
+                    parseFile(fileNames.get(j));
 
-            final int MAX_THREADS = 8;
-
-            ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREADS);
-
-            for (int k = 0; k < fileNames.length; k++) {
-                final int l = k;
-                executorService.submit(() -> {
-                    try {
-                        parseFile(fileNames[l]);
-
-                    } catch (IOException | NumberFormatException e) {
-                        System.out.println("No .csv files are read");
-                        throw new Error(e);
-                    }
-                });
-            }
-
-            executorService.shutdown();
-            executorService.awaitTermination(1, TimeUnit.DAYS);
-
-            allNumberOfRecordsForAllDataSets.add(numberOfRecords);
-            System.out.println("ReadFile, time: "
-                    + (System.currentTimeMillis() - start) + " ms");
-            System.out.println("Number of threads started: " + MAX_THREADS);
-            System.out.println("Recordnr of dataSet " + (i + 1) + ": "
-                    + numberOfRecords.size());
-            System.out.println("-------------------------------------------------------------------------\n");
+                } catch (IOException e) {
+                    System.out.printf(format, "No .csv files are read");
+                    throw new Error(e);
+                }
+            });
         }
 
-        System.out.println("ReadFile for all dataSets, total time: "
-                + (System.currentTimeMillis() - startTotal) + " ms");
+        executorService.shutdown();
+        try {
+            executorService.awaitTermination(1, TimeUnit.DAYS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        return allNumberOfRecordsForAllDataSets;
+
+        System.out.printf(format, "RecordNr of data set: ", numberOfRecords.size());
+        System.out.printf(format, "ReadFile, time: ", (System.currentTimeMillis() - startDataSet) + " ms");
+
+        return numberOfRecords;
     }
 
-    public void parseFile(String fileName) throws IOException {
+    private void parseFile(String fileName) throws IOException {
 
         BufferedReader inDataSet = new BufferedReader(new FileReader(fileName));
 
