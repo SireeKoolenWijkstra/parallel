@@ -57,16 +57,6 @@ public class FindMedianProducerConsumer {
             throw new Error(ex);
         }
 
-        int countRandom = 0;
-        // Code so that finding the median will take time
-        Random random = new Random();
-        int k = ((random.nextInt(80)) + 1) * 15000000;
-
-        //Act
-        for (int i = 0; i < k; i++) {
-            countRandom++;
-        }
-
         if (dataHandler.smallerThanPivot.size() > targetIndex) {
             return compareArraysToTargetIndex(dataHandler.smallerThanPivot, targetIndex);
         } else if ((dataHandler.smallerThanPivot.size() + dataHandler.equalsToPivot.size()) > targetIndex) {
