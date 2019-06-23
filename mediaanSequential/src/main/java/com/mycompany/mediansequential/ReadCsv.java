@@ -21,8 +21,6 @@ import org.apache.commons.csv.CSVRecord;
  */
 class ReadCsv {
 
-    private long start = System.currentTimeMillis();
-
     private ArrayList<Integer> numberOfRecords;
     private String format = "%-30s%s%n";
 
