@@ -54,7 +54,9 @@ public class ReadCsv  extends Thread {
                             .withFirstRecordAsHeader()
                             .parse(in);
                     for (CSVRecord record : records) {
-                        overallQuality.add(Integer.parseInt(record.get("quality")));
+                        synchronized (overallQuality){
+                            overallQuality.add(Integer.parseInt(record.get("quality")));
+                        }
                     }
 
                 } catch (IOException | NumberFormatException e) {
@@ -62,7 +64,7 @@ public class ReadCsv  extends Thread {
                     throw new Error(e);
                 }
             });
-            System.out.println("starting thread " + t);
+//            System.out.println("starting thread " + t);
             t.start();
             threadList[i] = t;
         }
@@ -76,10 +78,12 @@ public class ReadCsv  extends Thread {
         }
 
         String format = "%-25s%s%n";
-        //System.out.printf(format, "Length of list VM1: ", overallQuality.size());
-        System.out.printf(format, "Number of threads started: ", threadList.length);
-        System.out.printf(format, "Datasize is: ", dataSet.size() + "n");
+        System.out.println("-------------VM1------------------");
+        System.out.printf(format, "Length of list VM1: ", overallQuality.size());
         System.out.printf(format, "ReadFile time VM_1: ", (System.currentTimeMillis() - startTotal) + " ms");
+        System.out.printf(format, "Number of threads started: ", threadList.length);
+        //System.out.printf(format, "Data size is: ", dataSet.size() + "n");
+        System.out.println("-------------END VM1------------------");
         return overallQuality;
     }
 }

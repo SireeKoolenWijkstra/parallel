@@ -71,7 +71,7 @@ public class startAllAtOnce {
                     () -> {
                         try {
                             Median4.main(args);
-                        } catch (IOException | JMSException e) {
+                        } catch (JMSException e) {
                             e.printStackTrace();
                         }
                     }

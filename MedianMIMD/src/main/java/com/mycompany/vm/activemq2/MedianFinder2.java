@@ -41,13 +41,18 @@ public class MedianFinder2 {
         equalsToPivot = new ArrayList<>();
         biggerThanPivot = new ArrayList<>();
 
-        int countRandom = 0;
         // Code so that finding the median will take time
+        int countRandom = 0;
         Random random = new Random();
-        int k = ((random.nextInt(80)) + 1) * 15000000;
+        int k = ((random.nextInt(5)) + 1) * 1000/4;
 
-        for (int i1 = 0; i1 < k; i1++) {
-            countRandom++;
+        //Act
+        for (int j = 0; j < k; j++) {
+            countRandom = (countRandom + 1) & 7;
+
+        }
+        if (countRandom > 10) {
+            System.out.println("countRandom was skipped in run because it was never used");
         }
 
         assert list != null;

@@ -77,7 +77,7 @@ public class Median3 {
         while (active) {
             // let consumer receive messages
             Message message = consumer.receive();
-            System.out.println("Received Message VM_3");
+//            System.out.println("Received Message VM_3");
 
             //If consumer receive message it will check whether it's one of the known objects and do something
             if (message instanceof ObjectMessage) {
@@ -88,7 +88,7 @@ public class Median3 {
                     Pivot pi = (Pivot) om.getObject();
                     //retrieve the startAllAtOnce index number
                     int pivotIndex = pi.getPivot();
-                    System.out.println("PivotIndex VM_3: " + pivotIndex);
+//                    System.out.println("PivotIndex VM_3: " + pivotIndex);
                     // get the startAllAtOnce index value from list and send message about value of requested index
                     Pivot pivotIndexValue = new Pivot(list.get(pivotIndex));
                     ObjectMessage pivotIndexValueTo = session.createObjectMessage(pivotIndexValue);
@@ -104,15 +104,15 @@ public class Median3 {
                     if (firstRun) {
                         //With the first run there is no listCategory because it's still the whole list
                         lengthList = MedianFinder3.findMedianMIMD(pivotValue, list, null);
-                        System.out.println("pivotValue VM_3: " + pivotValue);
-                        System.out.println("list VM_3: " + list.size());
+//                        System.out.println("pivotValue VM_3: " + pivotValue);
+//                        System.out.println("list VM_3: " + list.size());
                         firstRun = false;
                     } else {
                         //Using only startAllAtOnce value and list category to determine the new list that needs to be processed
                         lengthList = MedianFinder3.findMedianMIMD(pivotValue, null, listCategory);
 
-                        System.out.println("pivotValue VM_3: " + pivotValue);
-                        System.out.println("listCategory VM_3: " + listCategory);
+//                        System.out.println("pivotValue VM_3: " + pivotValue);
+//                        System.out.println("listCategory VM_3: " + listCategory);
                     }
                     // Adding the Id of the VM so manager knows where values came from
                     lengthList.setId(VM_3);

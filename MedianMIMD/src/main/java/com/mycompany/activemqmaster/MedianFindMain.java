@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.activemqmaster;
 
 import java.io.IOException;
@@ -56,10 +51,10 @@ public class MedianFindMain {
     private static int subListPivotValue;
     private static String searchListForPivot = "";
     private static String category = null;
-    private static String format = "%-40s%s%n";
+    private static String format = "%-30s%s%n";
     private static final long MEGABYTE = 1024L * 1024L;
 
-    public static long bytesToMegabytes(long bytes) {
+    private static long bytesToMegabytes(long bytes) {
         return bytes / MEGABYTE;
     }
     /**
@@ -145,9 +140,9 @@ public class MedianFindMain {
                 subListPivotIndex = getSubListPivotIndex(pivotIndex, category);
             }
 
-            System.out.printf(format, "Targeted Index ", targetIndex);
-            System.out.printf(format, "Total list size is ", listSize);
-            System.out.printf(format, "subListPivotIndex ", subListPivotIndex);
+//            System.out.printf(format, "Targeted Index ", targetIndex);
+//            System.out.printf(format, "Total list size is ", listSize);
+//            System.out.printf(format, "subListPivotIndex ", subListPivotIndex);
 
             smallerThanPivotLength = 0;
             equalsToPivotLength = 0;
@@ -214,13 +209,18 @@ public class MedianFindMain {
             if (smallerThanPivotLength > targetIndex) {
                 anotherRun = true;
                 category = SMALLER_LIST;
-                System.out.printf(format, "category is: ", category);
+//                System.out.printf(format, "category is: ", category);
                 listSize = smallerThanPivotLength;
             } else if ((smallerThanPivotLength + equalsToPivotLength) > targetIndex) {
                 medianNotFound = false;
-                System.out.printf(format, "Total time for finding median: ", (System.currentTimeMillis() - totalTime) + " ms");
+
+                System.out.println("--------------------------------");
                 System.out.printf(format, "Median is found in ", medianFoundInCycles + " cycles");
                 System.out.printf(format, "Median is ", subListPivotValue);
+                System.out.println("--------------------------------");
+                System.out.printf(format, "Total Runtime: ", (System.currentTimeMillis() - totalTime) + " ms");
+                System.out.println("--------------------------------");
+
                 // Get the Java runtime
                 Runtime runtime = Runtime.getRuntime();
                 // Run the garbage collector
@@ -237,7 +237,7 @@ public class MedianFindMain {
                 targetIndex = targetIndex - smallerThanPivotLength - equalsToPivotLength;
                 listSize = biggerThanPivotLength;
                 category = BIGGER_LIST;
-                System.out.printf(format, "category is: ", category);
+//                System.out.printf(format, "category is: ", category);
             }
             System.out.println("----------------------------------------");
         }
@@ -258,8 +258,8 @@ public class MedianFindMain {
             Pivot p = (Pivot) m;
             subListPivotValue = p.getPivot();
 
-            System.out.println("Pivot Value " + subListPivotValue);
-            System.out.println("total size of lists: " + listSize);
+//            System.out.println("Pivot Value " + subListPivotValue);
+            System.out.printf(format, "total size of lists: ", listSize);
 
             if (subListPivotValue >= 0) {
                 // sending startAllAtOnce to active mq 4x queue
@@ -282,9 +282,9 @@ public class MedianFindMain {
 
             // keeps getting messages until values are equal and all messages been processed
             if(listSize == (smallerThanPivotLength + equalsToPivotLength + biggerThanPivotLength)) {
-                System.out.println("smallerThanPivotLength: " + smallerThanPivotLength);
-                System.out.println("equalsToPivotLength: " + equalsToPivotLength);
-                System.out.println("biggerThanPivotLength: " + biggerThanPivotLength);
+                System.out.printf(format, "smallerThanPivotLength: ", smallerThanPivotLength);
+                System.out.printf(format, "equalsToPivotLength: ", equalsToPivotLength);
+                System.out.printf(format, "biggerThanPivotLength: ", biggerThanPivotLength);
                 anotherRun = false;
             }
         } else {
@@ -340,7 +340,7 @@ public class MedianFindMain {
 
     // Counting total list size and determine the targetIndex where the vm is found
     @NotNull
-    public static void getTargetIndex(Connection connection) throws JMSException {
+    private static void getTargetIndex(Connection connection) throws JMSException {
         int messageReceived = 0;
         lengthMessageList = new ArrayList<>();
         //Creating Session on connection. 
@@ -363,7 +363,7 @@ public class MedianFindMain {
                 messageReceived++;
             }
         }
-        System.out.printf(format, "Total list size: ", listSize);
+//        System.out.printf(format, "Total list size: ", listSize);
         // function for finding the target index on all lists together 
         if (listSize % 2 == 1) {
             targetIndex = (listSize - 1) / 2;
